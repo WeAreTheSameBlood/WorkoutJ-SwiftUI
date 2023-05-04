@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="true" userDefinedModelVersionIdentifier="">
-    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
-        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22E261" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="Exercise" representedClassName="Exercise" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="reps" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="weight" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="inWorkout" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Workout" inverseName="exersices" inverseEntity="Workout"/>
     </entity>
-    <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="44"/>
-    </elements>
+    <entity name="Workout" representedClassName="Workout" syncable="YES">
+        <attribute name="completeDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="expectedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="isComplete" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="onDateBool" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="serial" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="exersices" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Exercise" inverseName="inWorkout" inverseEntity="Exercise"/>
+    </entity>
 </model>

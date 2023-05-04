@@ -9,12 +9,19 @@ import SwiftUI
 
 @main
 struct WorkoutJApp: App {
+    
     let persistenceController = PersistenceController.shared
+    
 
     var body: some Scene {
+        
+        let context = persistenceController.container.viewContext
+        let dateHolder = DataHolder(context)
+        
         WindowGroup {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environmentObject(dateHolder)
         }
     }
 }
