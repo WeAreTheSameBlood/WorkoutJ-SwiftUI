@@ -12,6 +12,7 @@ struct AddWorkoutBtnView: View {
         HStack{
             NavigationLink(destination: CreateNewWorkout()) {
                 Image(systemName: "plus")
+                    .imageScale(.large)
             }
             .padding(15)
             .cornerRadius(45)

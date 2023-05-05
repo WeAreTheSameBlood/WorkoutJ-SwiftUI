@@ -25,7 +25,10 @@ struct ContentView: View {
                     ForEach(workouts) { workout in
                         NavigationLink(destination: OneWorkoutPlanView(workout: workout))
                         {
-                            Text(workout.name! + "  \(String(describing: workout.exersices?.count))")
+                            Text(workout.name!
+                                 + (workout.exersices!.count > 0
+                                    ? "\nExercises:\(String(describing: workout.exersices!.count))"
+                                    : "\nNo exercises"))
                         }
                     }
                     .onDelete(perform: deleteItems)

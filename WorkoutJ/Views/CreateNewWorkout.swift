@@ -37,7 +37,7 @@ struct CreateNewWorkout: View {
         Form {
             Section(header: Text("New wokout")) {
                 TextField("Name", text: $name)
-                TextField("Description", text: $desc)
+                TextField("Description (optional)", text: $desc)
             }
             Section(header: Text("Expected date")) {
                 Toggle("Schedule a date", isOn: $onDateBool)

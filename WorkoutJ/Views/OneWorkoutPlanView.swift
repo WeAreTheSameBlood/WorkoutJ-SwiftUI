@@ -16,8 +16,13 @@ struct OneWorkoutPlanView: View {
     var body: some View {
         ZStack {
             List {
+                if (workout.desc != "") {
+                    Section(header: Text("Description")) {
+                        Text(workout.desc ?? "Empty description")
+                    }
+                }
                 ForEach(workout.exersices?.allObjects as! [Exercise]) { ex in
-                        Text("\(ex.name ?? "Name is empty") \nReps: \(ex.reps) \n\(ex.weight.formatted(.number)) kg")
+                    Text("\(ex.name!) \nWeight: \(String(format: "%.1f", ex.weight)) kg \nReps: \(ex.reps)")
                     }
                 .onDelete(perform: deleteItems)
             }

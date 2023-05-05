@@ -15,6 +15,7 @@ struct AddExerciseBtnView: View {
             NavigationLink(destination: CreateNewExerciseView(inWorkout: workout)
                 .environmentObject(workout)) {
                 Image(systemName: "plus")
+                        .imageScale(.large)
             }
             .padding(15)
             .cornerRadius(45)

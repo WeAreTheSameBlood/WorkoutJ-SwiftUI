@@ -25,7 +25,11 @@ struct PersistenceController {
             
             newWorkout.serial = Int32(num)
             newWorkout.name = "Name for \(num) workout"
+            newWorkout.desc = .random() ? "Basic desc for this workout" : ""
             newWorkout.isComplete = .random()
+            if newWorkout.isComplete == true {
+                newWorkout.completeDate = Date()
+            }
             newWorkout.createdDate = Date()
             newWorkout.exersices = []
             
