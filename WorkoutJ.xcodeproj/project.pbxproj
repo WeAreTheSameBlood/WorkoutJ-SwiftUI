@@ -25,6 +25,10 @@
 		370737222A003F86009B9514 /* AddExerciseBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370737212A003F86009B9514 /* AddExerciseBtnView.swift */; };
 		370737252A08643D009B9514 /* WorkoutCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370737242A08643D009B9514 /* WorkoutCellView.swift */; };
 		370737272A086732009B9514 /* CheckBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370737262A086732009B9514 /* CheckBoxView.swift */; };
+		3707372A2A08FE41009B9514 /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370737292A08FE41009B9514 /* ExportService.swift */; };
+		3707372C2A09002C009B9514 /* ExportModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3707372B2A09002C009B9514 /* ExportModels.swift */; };
+		3707372F2A09147D009B9514 /* SetOfExercise+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3707372D2A09147D009B9514 /* SetOfExercise+CoreDataClass.swift */; };
+		370737302A09147D009B9514 /* SetOfExercise+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3707372E2A09147D009B9514 /* SetOfExercise+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +53,10 @@
 		370737232A03E809009B9514 /* readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
 		370737242A08643D009B9514 /* WorkoutCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCellView.swift; sourceTree = "<group>"; };
 		370737262A086732009B9514 /* CheckBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxView.swift; sourceTree = "<group>"; };
+		370737292A08FE41009B9514 /* ExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportService.swift; sourceTree = "<group>"; };
+		3707372B2A09002C009B9514 /* ExportModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportModels.swift; sourceTree = "<group>"; };
+		3707372D2A09147D009B9514 /* SetOfExercise+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SetOfExercise+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		3707372E2A09147D009B9514 /* SetOfExercise+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SetOfExercise+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,15 +90,14 @@
 		370736F429FDC697009B9514 /* WorkoutJ */ = {
 			isa = PBXGroup;
 			children = (
+				370737282A08FDDF009B9514 /* DataWorkers */,
 				3707370A29FDCCD3009B9514 /* Views */,
 				3707370929FDCCCB009B9514 /* Models */,
 				370736F529FDC697009B9514 /* WorkoutJApp.swift */,
-				370736F729FDC697009B9514 /* Persistence.swift */,
 				370736FE29FDC698009B9514 /* Assets.xcassets */,
 				3707370029FDC698009B9514 /* WorkoutJ.entitlements */,
 				370736F929FDC697009B9514 /* WorkoutJ.xcdatamodeld */,
 				3707370129FDC698009B9514 /* Preview Content */,
-				3707370B29FDCD79009B9514 /* DataHolder.swift */,
 			);
 			path = WorkoutJ;
 			sourceTree = "<group>";
@@ -106,10 +113,13 @@
 		3707370929FDCCCB009B9514 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				3707372D2A09147D009B9514 /* SetOfExercise+CoreDataClass.swift */,
+				3707372E2A09147D009B9514 /* SetOfExercise+CoreDataProperties.swift */,
 				3707370D29FDCE0B009B9514 /* Workout+CoreDataClass.swift */,
 				3707370E29FDCE0B009B9514 /* Workout+CoreDataProperties.swift */,
 				3707370F29FDCE0B009B9514 /* Exercise+CoreDataClass.swift */,
 				3707371029FDCE0B009B9514 /* Exercise+CoreDataProperties.swift */,
+				3707372B2A09002C009B9514 /* ExportModels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -127,6 +137,16 @@
 				370737262A086732009B9514 /* CheckBoxView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		370737282A08FDDF009B9514 /* DataWorkers */ = {
+			isa = PBXGroup;
+			children = (
+				370736F729FDC697009B9514 /* Persistence.swift */,
+				3707370B29FDCD79009B9514 /* DataHolder.swift */,
+				370737292A08FE41009B9514 /* ExportService.swift */,
+			);
+			path = DataWorkers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,17 +222,21 @@
 				370736FB29FDC697009B9514 /* WorkoutJ.xcdatamodeld in Sources */,
 				3707371129FDCE0B009B9514 /* Workout+CoreDataClass.swift in Sources */,
 				3707371629FDD56F009B9514 /* CreateNewWorkout.swift in Sources */,
+				3707372F2A09147D009B9514 /* SetOfExercise+CoreDataClass.swift in Sources */,
 				3707370C29FDCD79009B9514 /* DataHolder.swift in Sources */,
 				3707371329FDCE0B009B9514 /* Exercise+CoreDataClass.swift in Sources */,
 				370737202A0020F8009B9514 /* CreateNewExerciseView.swift in Sources */,
 				370737252A08643D009B9514 /* WorkoutCellView.swift in Sources */,
+				3707372C2A09002C009B9514 /* ExportModels.swift in Sources */,
 				370736F629FDC697009B9514 /* WorkoutJApp.swift in Sources */,
 				3707371229FDCE0B009B9514 /* Workout+CoreDataProperties.swift in Sources */,
 				3707371829FED0DA009B9514 /* AddWorkoutBtnView.swift in Sources */,
 				370737222A003F86009B9514 /* AddExerciseBtnView.swift in Sources */,
+				370737302A09147D009B9514 /* SetOfExercise+CoreDataProperties.swift in Sources */,
 				370736FD29FDC697009B9514 /* ContentView.swift in Sources */,
 				370736F829FDC697009B9514 /* Persistence.swift in Sources */,
 				3707371E29FFD769009B9514 /* OneWorkoutPlanView.swift in Sources */,
+				3707372A2A08FE41009B9514 /* ExportService.swift in Sources */,
 				3707371429FDCE0B009B9514 /* Exercise+CoreDataProperties.swift in Sources */,
 				370737272A086732009B9514 /* CheckBoxView.swift in Sources */,
 			);

@@ -2,7 +2,7 @@
 //  Workout+CoreDataProperties.swift
 //  WorkoutJ
 //
-//  Created by Andrii Hlybchenko on 30.04.2023.
+//  Created by Andrii Hlybchenko on 08.05.2023.
 //
 //
 
@@ -47,4 +47,15 @@ extension Workout {
 
 extension Workout : Identifiable {
 
+}
+
+extension Workout {
+    func toModel() -> WorkoutExportModel {
+        return WorkoutExportModel(name: name ?? "Name is empty",
+                            isComplete: isComplete,
+                            desc: desc,
+                            completeDate: completeDate,
+                            expectedDate: expectedDate,
+                            exersices: [])
+    }
 }

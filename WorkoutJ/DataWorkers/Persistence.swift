@@ -23,6 +23,7 @@ struct PersistenceController {
             let ex2 = Exercise(context: viewContext)
             let ex3 = Exercise(context: viewContext)
             
+            
             newWorkout.serial = Int32(num-1)
             newWorkout.name = "Name for \(num) workout"
             newWorkout.desc = .random() ? "Basic desc for this workout" : ""
@@ -36,16 +37,26 @@ struct PersistenceController {
             ex1.name = "Exercice name for \(num) workout"
             ex2.name = "Exercice name for \(num) workout"
             ex3.name = "Exercice name for \(num) workout"
-
-            ex1.reps = .random(in: Range(uncheckedBounds: (1, 20)))
-            ex2.reps = .random(in: Range(uncheckedBounds: (1, 20)))
-            ex3.reps = .random(in: Range(uncheckedBounds: (1, 20)))
-
-            ex1.weight = .random(in: ClosedRange(uncheckedBounds: (5.0, 60.0)))
-            ex2.weight = .random(in: ClosedRange(uncheckedBounds: (5.0, 60.0)))
-            ex3.weight = .random(in: ClosedRange(uncheckedBounds: (5.0, 60.0)))
+            
+            ex1.serial = 0
+            ex2.serial = 1
+            ex3.serial = 2
 
             newWorkout.exersices = [ex1, ex2, ex3]
+            
+            for ex in (newWorkout.exersices?.allObjects as! [Exercise]) {
+                var setsArr : [SetOfExercise] = []
+                
+                for set in 1...4 {
+                    let exSet = SetOfExercise(context: viewContext)
+                    exSet.serial = Int32(set-1)
+                    exSet.reps = .random(in: Range(uncheckedBounds: (1, 12)))
+                    exSet.weight = .random(in: ClosedRange(uncheckedBounds: (10, 60.0)))
+                    setsArr.append(exSet)
+                }
+                
+                ex.sets = NSSet(array: setsArr)
+            }
         }
         
         do {
