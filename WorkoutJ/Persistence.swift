@@ -23,7 +23,7 @@ struct PersistenceController {
             let ex2 = Exercise(context: viewContext)
             let ex3 = Exercise(context: viewContext)
             
-            newWorkout.serial = Int32(num)
+            newWorkout.serial = Int32(num-1)
             newWorkout.name = "Name for \(num) workout"
             newWorkout.desc = .random() ? "Basic desc for this workout" : ""
             newWorkout.isComplete = .random()
@@ -32,14 +32,6 @@ struct PersistenceController {
             }
             newWorkout.createdDate = Date()
             newWorkout.exersices = []
-            
-//            for _ in 1...4 {
-//                let ex = Exercise(context: viewContext)
-//                ex.name = "Exercice name for \(num) workout"
-//                ex.reps = .random(in: Range(uncheckedBounds: (1, 20)))
-//                ex.weight = .random(in: ClosedRange(uncheckedBounds: (5.0, 60.0)))
-//
-//            }
             
             ex1.name = "Exercice name for \(num) workout"
             ex2.name = "Exercice name for \(num) workout"

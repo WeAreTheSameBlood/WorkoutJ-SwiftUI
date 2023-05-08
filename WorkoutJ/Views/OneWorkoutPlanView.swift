@@ -21,10 +21,24 @@ struct OneWorkoutPlanView: View {
                         Text(workout.desc ?? "Empty description")
                     }
                 }
-                ForEach(workout.exersices?.allObjects as! [Exercise]) { ex in
-                    Text("\(ex.name!) \nWeight: \(String(format: "%.1f", ex.weight)) kg \nReps: \(ex.reps)")
+                if (workout.exersices!.count > 0) {
+                    Section(header: Text("Exercises")) {
+                        ForEach(workout.exersices?.allObjects as! [Exercise]) { ex in
+                            Text("\(ex.name!) \nWeight: \(String(format: "%.1f", ex.weight)) kg \nReps: \(ex.reps)")
+                        }
+                        .onDelete(perform: deleteExercise)
+                        .onMove(perform: moveExercise)
                     }
-                .onDelete(perform: deleteItems)
+                } else {
+                    Text("No exercises have been added yet")
+                        .padding(15)
+                        .multilineTextAlignment(.center)
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    EditButton()
+                }
             }
             AddExerciseBtnView(workout: workout)
                 .environmentObject(workout)
@@ -33,7 +47,15 @@ struct OneWorkoutPlanView: View {
         .navigationTitle(workout.name!)
     }
     
-    private func deleteItems(offsets: IndexSet) {
+    private func moveExercise(from source: IndexSet, to destination: Int) {
+        
+        var exArray = Array(workout.exersices!)
+        exArray.move(fromOffsets: source, toOffset: destination)
+        
+        dataHolder.saveContext(viewContext)
+    }
+    
+    private func deleteExercise(offsets: IndexSet) {
         withAnimation {
             offsets.map { (workout.exersices?.allObjects as! [Exercise])[$0] }.forEach(viewContext.delete)
             dataHolder.saveContext(viewContext)

@@ -44,7 +44,7 @@ struct CreateNewWorkout: View {
                 if onDateBool == true {
                     withAnimation() {
                         DatePicker("On date",
-                                   selection: $expectedDate, displayedComponents: [.hourAndMinute, .date])
+                                   selection: $expectedDate, displayedComponents: [.date])
                     }
                 }
             }
@@ -58,10 +58,11 @@ struct CreateNewWorkout: View {
     
     private func saveNewItem() {
         newWorkout = Workout(context: viewContext)
-        newWorkout?.serial = Int32(workouts.count + 1)
+        newWorkout?.serial = Int32(workouts.count)
         newWorkout?.name = name != "" ? name : "Name is empty"
         newWorkout?.desc = desc
         newWorkout?.createdDate = Date()
+        newWorkout?.isComplete = false
         newWorkout?.onDateBool = onDateBool
         newWorkout?.expectedDate = expectedDate
         

@@ -16,23 +16,44 @@ struct ContentView: View {
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Workout.serial, ascending: false)],
         animation: .default)
-    private var workouts: FetchedResults<Workout>
+    var workouts: FetchedResults<Workout>
 
     var body: some View {
         NavigationView {
             ZStack {
                 List {
-                    ForEach(workouts) { workout in
-                        NavigationLink(destination: OneWorkoutPlanView(workout: workout))
-                        {
-                            Text(workout.name!
-                                 + (workout.exersices!.count > 0
-                                    ? "\nExercises:\(String(describing: workout.exersices!.count))"
-                                    : "\nNo exercises"))
+                    if (workouts.isEmpty) {
+                        Text("No workouts have been added yet")
+                            .padding(15)
+                            .multilineTextAlignment(.center)
+                    } else {
+                        Section(header: Text("Planed")) {
+                            ForEach(workouts) { workout in
+                                if (workout.isComplete == false) {
+                                    NavigationLink(destination: OneWorkoutPlanView(workout: workout))
+                                    {
+                                        WorkoutCellView(workout: workout)
+                                            .environmentObject(dataHolder)
+                                    }
+                                }
+                            }
+                            .onDelete(perform: deleteWorkout)
+                            .onMove(perform: moveWorkout)
+                        }
+                        Section(header: Text("Completed")) {
+                            ForEach(workouts) { workout in
+                                if (workout.isComplete == true) {
+                                    NavigationLink(destination: OneWorkoutPlanView(workout: workout))
+                                    {
+                                        WorkoutCellView(workout: workout)
+                                            .environmentObject(dataHolder)
+                                    }
+                                }
+                            }
+                            .onDelete(perform: deleteWorkout)
+                            .onMove(perform: moveWorkout)
                         }
                     }
-                    .onDelete(perform: deleteItems)
-//                    .onMove(perform: moveWorkouts)
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
@@ -45,29 +66,26 @@ struct ContentView: View {
         .navigationTitle(Text("Workouts"))
         }
     }
-
-    private func deleteItems(offsets: IndexSet) {
+    
+    private func deleteWorkout(offsets: IndexSet) {
         withAnimation {
             offsets.map { workouts[$0] }.forEach(viewContext.delete)
             dataHolder.saveContext(viewContext)
         }
     }
     
-    private func moveWorkouts(from source: IndexSet, to destination: Int) {
-        /**
-         Create logic for move func
-         */
+    private func moveWorkout(from source: IndexSet, to destination: Int) {
+        var workoutsArray = Array(workouts)
+        workoutsArray.move(fromOffsets: source, toOffset: destination)
+        
+        for i in 0..<workoutsArray.count {
+            workoutsArray[workoutsArray.count-1-i].serial = Int32(i)
+        }
+        
         dataHolder.saveContext(viewContext)
     }
     
 }
-
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
