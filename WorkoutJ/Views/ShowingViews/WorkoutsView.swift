@@ -67,22 +67,35 @@ struct ContentView: View {
         }
     }
     
-    private func deleteWorkout(offsets: IndexSet) {
+    private func deleteWorkout(at offsets: IndexSet) {
         withAnimation {
             offsets.map { workouts[$0] }.forEach(viewContext.delete)
-            dataHolder.saveContext(viewContext)
+            
+            var newSerial = Int32(workouts.count-1)
+            workouts.forEach { workout in
+                workout.serial = newSerial
+                newSerial-=1
+            }
+//            for i in 0..<workouts.count {
+//                workouts[workouts.count-i-1].serial = Int32(i)
+//            }
         }
     }
     
     private func moveWorkout(from source: IndexSet, to destination: Int) {
-        var workoutsArray = Array(workouts)
-        workoutsArray.move(fromOffsets: source, toOffset: destination)
-        
-        for i in 0..<workoutsArray.count {
-            workoutsArray[workoutsArray.count-1-i].serial = Int32(i)
+        withAnimation {
+            var workoutsArray = Array(workouts)
+            workoutsArray.move(fromOffsets: source, toOffset: destination)
+            updateSerialInArray(array: workoutsArray)
+            
+            dataHolder.saveContext(viewContext)
         }
-        
-        dataHolder.saveContext(viewContext)
+    }
+    
+    private func updateSerialInArray(array: [Workout]) {
+        for i in 0..<array.count {
+            array[array.count-1-i].serial = Int32(i)
+        }
     }
     
 }

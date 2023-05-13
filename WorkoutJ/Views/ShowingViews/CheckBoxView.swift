@@ -20,6 +20,7 @@ struct CheckBoxView: View {
         .foregroundColor(workout.isComplete
                          ? .green
                          : .secondary)
+        .padding(workout.isComplete ? 0 : 5)
         .onTapGesture {
             withAnimation {
                 workout.isComplete = !workout.isComplete

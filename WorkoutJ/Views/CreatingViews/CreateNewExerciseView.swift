@@ -15,6 +15,7 @@ struct CreateNewExerciseView: View {
 
     @State var newExercise: Exercise?
     @State var name: String
+    @State var desc: String
     @State var sets: [SetOfExercise]
     @State var inWorkout: Workout
     
@@ -27,17 +28,17 @@ struct CreateNewExerciseView: View {
     
     init(inWorkout: Workout) {
         _name = State(initialValue: "")
+        _desc = State(initialValue: "")
         _sets = State(initialValue: [])
         _inWorkout = State(initialValue: inWorkout)
     }
     
     var body: some View {
-        @State var weight: String = ""
-        @State var reps: String = ""
         
         Form {
             Section(header: Text("New exercise")) {
                 TextField("Name", text: $name)
+                TextField("Description (optional)", text: $desc)
             }
             Section(header: Text("Parameters on sets")) {
                 ForEach(0 ..< numOfFields) { numOfSet in
@@ -45,9 +46,9 @@ struct CreateNewExerciseView: View {
                     HStack {
                         Text("Set № \(numOfSet+1):\t")
                         TextField("Weight", text: $weightArr[numOfSet])
-                            .keyboardType(.decimalPad)
+//                            .keyboardType(.decimalPad)
                         TextField("Reps", text: $repsArr[numOfSet])
-                            .keyboardType(.numberPad)
+//                            .keyboardType(.numberPad)
                     }
 
                 }
@@ -66,18 +67,25 @@ struct CreateNewExerciseView: View {
     }
     
     private func addFieldOfSet() {
-        for num in 0 ... numOfFields {
+        saveSetsFromFields()
+        numOfFields += 1
+    }
+    
+    private func saveSetsFromFields() {
+        for num in 0 ..< numOfFields {
             var setsField: [String : String] = [:]
             setsField["Weight"] = weightArr[num]
             setsField["Reps"] = repsArr[num]
             fieldsOfSet[num+1] = setsField
         }
-        numOfFields += 1
     }
 
     private func saveNewExercise() {
+        saveSetsFromFields()
+        
         newExercise = Exercise(context: viewContext)
         newExercise?.name = name != "" ? name : "Name is empty"
+        newExercise?.desc = desc
         newExercise?.serial = inWorkout.exersices!.count > 0 ? generateSerial() : 0
         
         for oneSet in 1 ..< fieldsOfSet.count+1 {
@@ -85,10 +93,12 @@ struct CreateNewExerciseView: View {
             newSet.serial = Int32(oneSet)
             newSet.weight = (fieldsOfSet[oneSet]!["Weight"]) != "" ? Float(fieldsOfSet[oneSet]!["Weight"]!.replacingOccurrences(of: ",", with: "."))! : 0.0
             newSet.reps = fieldsOfSet[oneSet]!["Reps"] != "" ? Int16(fieldsOfSet[oneSet]!["Reps"]!)! : 0
-            sets.append(newSet)
+            newExercise?.addToSets(newSet)
+//            sets.append(newSet)
         }
         
-        newExercise?.sets = NSSet(array: sets)
+        
+//        newExercise?.sets = NSSet(array: sets)
         newExercise?.inWorkout = inWorkout
         
         dataHolder.saveContext(viewContext)

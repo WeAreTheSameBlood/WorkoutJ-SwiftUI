@@ -14,14 +14,14 @@ struct OneWorkoutPlanView: View {
     @ObservedObject var workout: Workout
     
     var body: some View {
-        let sortedExercises = workout.exersices?.sortedArray(using: [NSSortDescriptor(key: "serial", ascending: false)]) as! [Exercise]
+        let sortedExercises = workout.exersices?.sortedArray(using: [NSSortDescriptor(key: "serial", ascending: true)]) as! [Exercise]
         
         ZStack {
             
             List {
                 if (workout.desc != "") {
                     Section(header: Text("Description")) {
-                        Text(workout.desc ?? "Empty description")
+                        Text(workout.desc!)
                     }
                 }
                 if (sortedExercises.count > 0) {
@@ -29,13 +29,11 @@ struct OneWorkoutPlanView: View {
                         ForEach(sortedExercises) { exercise in
                             VStack {
                                 HStack {
-                                    Text("")
-                                        .frame(width: UIScreen.main.bounds.width/8)
-                                    Text("\(exercise.serial) | \(exercise.name!)")
-                                        
+                                    Text("\(exercise.name!)").frame(alignment: .leading)
                                     Spacer()
                                 }
                                 exerciseInfo(exercise: exercise)
+                    
                             }
                         }
                         .onDelete(perform: deleteExercise)
@@ -43,19 +41,19 @@ struct OneWorkoutPlanView: View {
                     }
                 } else {
                     Text("No exercises have been added yet")
+                        .opacity(0.5)
                         .padding(15)
                         .multilineTextAlignment(.center)
                 }
             }
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    Button(action: exportWorkout) {
+                    Button(action: shareWorkout) {
                         Image(systemName: "square.and.arrow.up")
                     }
                     EditButton()
                 }
             }
-            
                 AddExerciseBtnView(workout: workout)
                     .environmentObject(workout)
                     .position(x: UIScreen.main.bounds.width*0.5, y: UIScreen.main.bounds.height*0.75)
@@ -63,51 +61,60 @@ struct OneWorkoutPlanView: View {
         .navigationTitle(workout.name!)
     }
     
-    func exportWorkout() {
-        csvExportWorkout(workoutForExport: workout)
+    func shareWorkout() {
+        csvShareWorkout(workoutForShare: workout)
     }
     
-    private func exerciseInfo(exercise: Exercise) -> some View {
-        let sets = exercise.sets!.allObjects as! [SetOfExercise]
+    private func exerciseInfo(exercise: Exercise) -> AnyView {
+        
+        guard exercise.sets!.count > 0 else { return AnyView( Text("Sets not yet added").opacity(0.5)) }
+        
+        let sets = exercise.sets!.sortedArray(using: [NSSortDescriptor(key: "serial", ascending: true)]) as! [SetOfExercise]
         var setsInfo = ""
         
         for oneSet in sets {
             setsInfo += "\n\tWeight: \(String(format: "%.1f", oneSet.weight)) kg\tReps: \(oneSet.reps)"
         }
         
-        
-        return VStack {
-                ForEach(sets) { oneSet in
+        return AnyView(
+            VStack {
+                ScrollView(.horizontal) {
                     HStack {
-                        Text("").frame(width: UIScreen.main.bounds.width/5)
-                        Text("Weight: \(String(format: "%.1f", oneSet.weight)) kg")
-                            .frame(width: UIScreen.main.bounds.width/2.5, alignment: .leading)
-                        Text("Reps: \(oneSet.reps)")
-                            .frame(width: UIScreen.main.bounds.width/2.5, alignment: .leading)
+                        ForEach(sets) {oneSet in
+                            OneSetView(oneSet: oneSet)
+                        }
                     }
-                    //                Text(exercise.sets!.count > 0 ? setsInfo : "")
                 }
             }
-        
+        )
         
     }
     
     private func moveExercise(from source: IndexSet, to destination: Int) {
-        
-        var exArray = workout.exersices?.sortedArray(using: [NSSortDescriptor(key: "serial", ascending: false)]) as! [Exercise]
-        exArray.move(fromOffsets: source, toOffset: destination)
-        
-        for i in 0..<exArray.count {
-            exArray[exArray.count-1-i].serial = Int32(i)
+        var sortedExercises = workout.exersices?.sortedArray(using: [NSSortDescriptor(key: "serial", ascending: true)]) as! [Exercise]
+        withAnimation {
+            sortedExercises.move(fromOffsets: source, toOffset: destination)
+            updateSerialInArray(array: sortedExercises)
+            
+            workout.exersices? = NSSet(array: sortedExercises)
+            dataHolder.saveContext(viewContext)
         }
-        
-        dataHolder.saveContext(viewContext)
     }
     
-    private func deleteExercise(offsets: IndexSet) {
+    private func deleteExercise(at offsets: IndexSet) {
+        var sortedExercises = workout.exersices?.sortedArray(using: [NSSortDescriptor(key: "serial", ascending: true)]) as! [Exercise]
         withAnimation {
-            offsets.map { (workout.exersices?.allObjects as! [Exercise])[$0] }.forEach(viewContext.delete)
+            sortedExercises.remove(atOffsets: offsets)
+            updateSerialInArray(array: sortedExercises)
+            
+            workout.exersices? = NSSet(array: sortedExercises)
             dataHolder.saveContext(viewContext)
+        }
+    }
+    
+    private func updateSerialInArray(array: [Exercise]) {
+        for i in 0..<array.count {
+            array[i].serial = Int32(i)
         }
     }
 }

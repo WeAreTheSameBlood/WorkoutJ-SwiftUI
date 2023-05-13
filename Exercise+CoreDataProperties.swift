@@ -2,7 +2,7 @@
 //  Exercise+CoreDataProperties.swift
 //  WorkoutJ
 //
-//  Created by Andrii Hlybchenko on 08.05.2023.
+//  Created by Andrii Hlybchenko on 14.05.2023.
 //
 //
 
@@ -18,6 +18,7 @@ extension Exercise {
 
     @NSManaged public var name: String?
     @NSManaged public var serial: Int32
+    @NSManaged public var desc: String?
     @NSManaged public var inWorkout: Workout?
     @NSManaged public var sets: NSSet?
 
@@ -45,7 +46,11 @@ extension Exercise : Identifiable {
 }
 
 extension Exercise {
-    func toModel() -> ExerciseExportModel {
-        return ExerciseExportModel(name: name ?? "Exersice name is empty")
+    func toModel() -> ExerciseShareModel {
+        return ExerciseShareModel(
+                            name: name ?? "Exersice name is empty",
+                            serial: serial,
+                            desc: desc,
+                            sets: (sets?.allObjects as! [SetOfExercise]).map{$0.toModel()})
     }
 }
