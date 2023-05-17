@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CreateNewWorkout: View {
+struct CreateUpdateWorkoutView: View {
     
     @Environment(\.presentationMode) var presentationMode : Binding<PresentationMode>
     @Environment(\.managedObjectContext) private var viewContext
@@ -33,9 +33,18 @@ struct CreateNewWorkout: View {
         _expectedDate = State(initialValue: Date())
     }
     
+    init(workout: Workout) {
+        _newWorkout = State(initialValue: workout)
+        _name = State(initialValue: workout.name!)
+        _desc = State(initialValue: workout.desc!)
+        _onDateBool = State(initialValue: workout.onDateBool)
+        _createdDate = State(initialValue: workout.createdDate!)
+        _expectedDate = State(initialValue: workout.expectedDate ?? Date())
+    }
+    
     var body: some View {
         Form {
-            Section(header: Text("New wokout")) {
+            Section(header: Text(newWorkout?.createdDate == nil ? "New wokout" : "Changing workout")) {
                 TextField("Name", text: $name)
                 TextField("Description (optional)", text: $desc)
             }
@@ -44,7 +53,8 @@ struct CreateNewWorkout: View {
                 if onDateBool == true {
                     withAnimation() {
                         DatePicker("On date",
-                                   selection: $expectedDate, displayedComponents: [.date])
+                                   selection: $expectedDate,
+                                   displayedComponents: [.date])
                     }
                 }
             }
@@ -57,22 +67,28 @@ struct CreateNewWorkout: View {
     }
     
     private func saveNewItem() {
-        newWorkout = Workout(context: viewContext)
-        newWorkout?.serial = Int32(workouts.count)
+        if (newWorkout == nil) {
+            newWorkout = Workout(context: viewContext)
+            newWorkout?.createdDate = createdDate
+            newWorkout?.serial = createNewSerial()
+            newWorkout?.isComplete = false
+        }
         newWorkout?.name = name != "" ? name : "Name is empty"
         newWorkout?.desc = desc
-        newWorkout?.createdDate = Date()
-        newWorkout?.isComplete = false
         newWorkout?.onDateBool = onDateBool
         newWorkout?.expectedDate = expectedDate
         
         dataHolder.saveContext(viewContext)
         self.presentationMode.wrappedValue.dismiss()
     }
+    
+    private func createNewSerial() -> Int32 {
+        return (workouts.max(by: {$0.serial < $1.serial})!.serial + 1)
+    }
 }
 
 struct CreateNewWorkout_Previews: PreviewProvider {
     static var previews: some View {
-        CreateNewWorkout()
+        CreateUpdateWorkoutView()
     }
 }

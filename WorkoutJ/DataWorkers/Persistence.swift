@@ -38,6 +38,10 @@ struct PersistenceController {
             ex2.name = "Exercice name for \(num) workout"
             ex3.name = "Exercice name for \(num) workout"
             
+            ex1.desc = ""
+            ex2.desc = ""
+            ex3.desc = ""
+            
             ex1.serial = 0
             ex2.serial = 1
             ex3.serial = 2

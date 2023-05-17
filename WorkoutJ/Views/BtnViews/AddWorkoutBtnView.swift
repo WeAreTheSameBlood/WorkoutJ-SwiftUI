@@ -10,7 +10,7 @@ import SwiftUI
 struct AddWorkoutBtnView: View {
     var body: some View {
         HStack{
-            NavigationLink(destination: CreateNewWorkout()) {
+            NavigationLink(destination: CreateUpdateWorkoutView()) {
                 Image(systemName: "plus")
                     .imageScale(.large)
             }

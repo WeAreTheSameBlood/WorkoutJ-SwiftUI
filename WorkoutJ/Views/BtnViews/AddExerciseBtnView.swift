@@ -12,7 +12,7 @@ struct AddExerciseBtnView: View {
     
     var body: some View {
         HStack{
-            NavigationLink(destination: CreateNewExerciseView(inWorkout: workout)
+            NavigationLink(destination: CreateUpdateExerciseView(inWorkout: workout)
                 .environmentObject(workout)) {
                 Image(systemName: "plus")
                         .imageScale(.large)

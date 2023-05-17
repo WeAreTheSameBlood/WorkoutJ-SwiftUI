@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public func csvShareWorkout(workoutForShare: Workout) {
+public func shareWorkoutLikeStr(workoutForShare: Workout) {
     
     let workoutModel: WorkoutShareModel = workoutForShare.toModel()
     let exercisesModel: [ExerciseShareModel] = (workoutForShare.exersices?.sortedArray(using: [NSSortDescriptor(key: "serial", ascending: true)]) as! [Exercise]).map{$0.toModel()}

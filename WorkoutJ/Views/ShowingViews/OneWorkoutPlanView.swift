@@ -13,11 +13,12 @@ struct OneWorkoutPlanView: View {
     
     @ObservedObject var workout: Workout
     
+    @State var toUpdateExercise: Bool = false
+    
     var body: some View {
         let sortedExercises = workout.exersices?.sortedArray(using: [NSSortDescriptor(key: "serial", ascending: true)]) as! [Exercise]
         
         ZStack {
-            
             List {
                 if (workout.desc != "") {
                     Section(header: Text("Description")) {
@@ -28,12 +29,24 @@ struct OneWorkoutPlanView: View {
                     Section(header: Text("Exercises")) {
                         ForEach(sortedExercises) { exercise in
                             VStack {
-                                HStack {
-                                    Text("\(exercise.name!)").frame(alignment: .leading)
-                                    Spacer()
-                                }
-                                exerciseInfo(exercise: exercise)
-                    
+                                OneExerciseView(exercise: exercise)
+                                    .swipeActions(edge: .leading) {
+                                        
+                                        /*
+                                         Found bug with update realization
+                                         If you use exercise as parameter for CreateUpdateExerciseView(exercise: exercise),
+                                         you will open view with first exercise in exercises
+                                         */
+                                        
+                                        // Update one workout
+                                        Button { toUpdateExercise = !toUpdateExercise } label: {
+                                            Label("Update", systemImage: "square.and.pencil")
+                                        }
+                                        .tint(.green)
+                                    }
+                                    .sheet(isPresented: $toUpdateExercise) {
+                                        CreateUpdateExerciseView(exercise: exercise)
+                                    }
                             }
                         }
                         .onDelete(perform: deleteExercise)
@@ -54,40 +67,15 @@ struct OneWorkoutPlanView: View {
                     EditButton()
                 }
             }
-                AddExerciseBtnView(workout: workout)
-                    .environmentObject(workout)
-                    .position(x: UIScreen.main.bounds.width*0.5, y: UIScreen.main.bounds.height*0.75)
+            AddExerciseBtnView(workout: workout)
+                .environmentObject(workout)
+                .position(x: UIScreen.main.bounds.width*0.5, y: UIScreen.main.bounds.height*0.75)
             }
         .navigationTitle(workout.name!)
     }
     
     func shareWorkout() {
-        csvShareWorkout(workoutForShare: workout)
-    }
-    
-    private func exerciseInfo(exercise: Exercise) -> AnyView {
-        
-        guard exercise.sets!.count > 0 else { return AnyView( Text("Sets not yet added").opacity(0.5)) }
-        
-        let sets = exercise.sets!.sortedArray(using: [NSSortDescriptor(key: "serial", ascending: true)]) as! [SetOfExercise]
-        var setsInfo = ""
-        
-        for oneSet in sets {
-            setsInfo += "\n\tWeight: \(String(format: "%.1f", oneSet.weight)) kg\tReps: \(oneSet.reps)"
-        }
-        
-        return AnyView(
-            VStack {
-                ScrollView(.horizontal) {
-                    HStack {
-                        ForEach(sets) {oneSet in
-                            OneSetView(oneSet: oneSet)
-                        }
-                    }
-                }
-            }
-        )
-        
+        shareWorkoutLikeStr(workoutForShare: workout)
     }
     
     private func moveExercise(from source: IndexSet, to destination: Int) {

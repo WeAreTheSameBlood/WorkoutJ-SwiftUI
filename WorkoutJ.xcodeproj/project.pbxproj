@@ -18,10 +18,10 @@
 		3707371229FDCE0B009B9514 /* Workout+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3707370E29FDCE0B009B9514 /* Workout+CoreDataProperties.swift */; };
 		3707371329FDCE0B009B9514 /* Exercise+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3707370F29FDCE0B009B9514 /* Exercise+CoreDataClass.swift */; };
 		3707371429FDCE0B009B9514 /* Exercise+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3707371029FDCE0B009B9514 /* Exercise+CoreDataProperties.swift */; };
-		3707371629FDD56F009B9514 /* CreateNewWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3707371529FDD56F009B9514 /* CreateNewWorkout.swift */; };
+		3707371629FDD56F009B9514 /* CreateUpdateWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3707371529FDD56F009B9514 /* CreateUpdateWorkoutView.swift */; };
 		3707371829FED0DA009B9514 /* AddWorkoutBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3707371729FED0DA009B9514 /* AddWorkoutBtnView.swift */; };
 		3707371E29FFD769009B9514 /* OneWorkoutPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3707371D29FFD769009B9514 /* OneWorkoutPlanView.swift */; };
-		370737202A0020F8009B9514 /* CreateNewExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3707371F2A0020F8009B9514 /* CreateNewExerciseView.swift */; };
+		370737202A0020F8009B9514 /* CreateUpdateExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3707371F2A0020F8009B9514 /* CreateUpdateExerciseView.swift */; };
 		370737222A003F86009B9514 /* AddExerciseBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370737212A003F86009B9514 /* AddExerciseBtnView.swift */; };
 		370737252A08643D009B9514 /* WorkoutCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370737242A08643D009B9514 /* WorkoutCellView.swift */; };
 		370737272A086732009B9514 /* CheckBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370737262A086732009B9514 /* CheckBoxView.swift */; };
@@ -32,6 +32,7 @@
 		37DCB8952A104882000AF931 /* REF_ToModelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCB8942A104882000AF931 /* REF_ToModelExtension.swift */; };
 		37DCB8972A1048A0000AF931 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCB8962A1048A0000AF931 /* Formatter.swift */; };
 		37DCB89D2A1049DA000AF931 /* OneSetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCB89C2A1049DA000AF931 /* OneSetView.swift */; };
+		37EC4EE92A14359C00682550 /* OneExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EC4EE82A14359C00682550 /* OneExerciseView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,10 +49,10 @@
 		3707370E29FDCE0B009B9514 /* Workout+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Workout+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		3707370F29FDCE0B009B9514 /* Exercise+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Exercise+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		3707371029FDCE0B009B9514 /* Exercise+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Exercise+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		3707371529FDD56F009B9514 /* CreateNewWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewWorkout.swift; sourceTree = "<group>"; };
+		3707371529FDD56F009B9514 /* CreateUpdateWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUpdateWorkoutView.swift; sourceTree = "<group>"; };
 		3707371729FED0DA009B9514 /* AddWorkoutBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkoutBtnView.swift; sourceTree = "<group>"; };
 		3707371D29FFD769009B9514 /* OneWorkoutPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneWorkoutPlanView.swift; sourceTree = "<group>"; };
-		3707371F2A0020F8009B9514 /* CreateNewExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewExerciseView.swift; sourceTree = "<group>"; };
+		3707371F2A0020F8009B9514 /* CreateUpdateExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUpdateExerciseView.swift; sourceTree = "<group>"; };
 		370737212A003F86009B9514 /* AddExerciseBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExerciseBtnView.swift; sourceTree = "<group>"; };
 		370737232A03E809009B9514 /* readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
 		370737242A08643D009B9514 /* WorkoutCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCellView.swift; sourceTree = "<group>"; };
@@ -63,6 +64,7 @@
 		37DCB8942A104882000AF931 /* REF_ToModelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = REF_ToModelExtension.swift; sourceTree = "<group>"; };
 		37DCB8962A1048A0000AF931 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		37DCB89C2A1049DA000AF931 /* OneSetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneSetView.swift; sourceTree = "<group>"; };
+		37EC4EE82A14359C00682550 /* OneExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneExerciseView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,8 +174,8 @@
 		37DCB8992A1048BD000AF931 /* CreatingViews */ = {
 			isa = PBXGroup;
 			children = (
-				3707371529FDD56F009B9514 /* CreateNewWorkout.swift */,
-				3707371F2A0020F8009B9514 /* CreateNewExerciseView.swift */,
+				3707371529FDD56F009B9514 /* CreateUpdateWorkoutView.swift */,
+				3707371F2A0020F8009B9514 /* CreateUpdateExerciseView.swift */,
 			);
 			path = CreatingViews;
 			sourceTree = "<group>";
@@ -186,6 +188,7 @@
 				3707371D29FFD769009B9514 /* OneWorkoutPlanView.swift */,
 				370737262A086732009B9514 /* CheckBoxView.swift */,
 				37DCB89C2A1049DA000AF931 /* OneSetView.swift */,
+				37EC4EE82A14359C00682550 /* OneExerciseView.swift */,
 			);
 			path = ShowingViews;
 			sourceTree = "<group>";
@@ -263,11 +266,11 @@
 				37DCB8972A1048A0000AF931 /* Formatter.swift in Sources */,
 				370736FB29FDC697009B9514 /* WorkoutJ.xcdatamodeld in Sources */,
 				3707371129FDCE0B009B9514 /* Workout+CoreDataClass.swift in Sources */,
-				3707371629FDD56F009B9514 /* CreateNewWorkout.swift in Sources */,
+				3707371629FDD56F009B9514 /* CreateUpdateWorkoutView.swift in Sources */,
 				3707372F2A09147D009B9514 /* SetOfExercise+CoreDataClass.swift in Sources */,
 				3707370C29FDCD79009B9514 /* DataHolder.swift in Sources */,
 				3707371329FDCE0B009B9514 /* Exercise+CoreDataClass.swift in Sources */,
-				370737202A0020F8009B9514 /* CreateNewExerciseView.swift in Sources */,
+				370737202A0020F8009B9514 /* CreateUpdateExerciseView.swift in Sources */,
 				370737252A08643D009B9514 /* WorkoutCellView.swift in Sources */,
 				3707372C2A09002C009B9514 /* ShareModels.swift in Sources */,
 				370736F629FDC697009B9514 /* WorkoutJApp.swift in Sources */,
@@ -281,6 +284,7 @@
 				370736F829FDC697009B9514 /* Persistence.swift in Sources */,
 				3707371E29FFD769009B9514 /* OneWorkoutPlanView.swift in Sources */,
 				3707372A2A08FE41009B9514 /* ExportService.swift in Sources */,
+				37EC4EE92A14359C00682550 /* OneExerciseView.swift in Sources */,
 				3707371429FDCE0B009B9514 /* Exercise+CoreDataProperties.swift in Sources */,
 				370737272A086732009B9514 /* CheckBoxView.swift in Sources */,
 			);
@@ -423,7 +427,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
@@ -465,7 +469,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;

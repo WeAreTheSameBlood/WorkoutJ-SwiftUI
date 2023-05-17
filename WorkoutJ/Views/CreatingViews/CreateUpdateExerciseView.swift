@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CreateNewExerciseView: View {
+struct CreateUpdateExerciseView: View {
     
     @Environment(\.presentationMode) var presentationMode : Binding<PresentationMode>
     @Environment(\.managedObjectContext) private var viewContext
@@ -19,24 +19,38 @@ struct CreateNewExerciseView: View {
     @State var sets: [SetOfExercise]
     @State var inWorkout: Workout
     
-    @State var numOfFields: Int = 1
+    @State var numOfFields: Int
     
     @State var fieldsOfSet: [Int : [String:String]] = [:]
     
-    @State var weightArr : [String] = Array(repeating: "", count: 100)
-    @State var repsArr : [String] = Array(repeating: "", count: 100)
+    @State var weightArr : [String] = [""]
+    @State var repsArr : [String] = [""]
     
     init(inWorkout: Workout) {
         _name = State(initialValue: "")
         _desc = State(initialValue: "")
         _sets = State(initialValue: [])
         _inWorkout = State(initialValue: inWorkout)
+        _numOfFields = State(initialValue: 1)
+    }
+    
+    init(exercise: Exercise) {
+        _newExercise = State(initialValue: exercise)
+        _name = State(initialValue: exercise.name!)
+        _desc = State(initialValue: exercise.desc!)
+        _sets = State(initialValue: exercise.sets?.allObjects as! [SetOfExercise])
+        _inWorkout = State(initialValue: exercise.inWorkout!)
+        _numOfFields = State(initialValue: exercise.sets!.count)
+        
+        _weightArr = State(initialValue: sets.map{String($0.weight)})
+        _repsArr = State(initialValue: sets.map{String($0.reps)})
+        
     }
     
     var body: some View {
         
         Form {
-            Section(header: Text("New exercise")) {
+            Section(header: Text(newExercise == nil ? "New exercise" : "Changing exercise")) {
                 TextField("Name", text: $name)
                 TextField("Description (optional)", text: $desc)
             }
@@ -46,9 +60,17 @@ struct CreateNewExerciseView: View {
                     HStack {
                         Text("Set № \(numOfSet+1):\t")
                         TextField("Weight", text: $weightArr[numOfSet])
-//                            .keyboardType(.decimalPad)
+                            .keyboardType(.decimalPad)
                         TextField("Reps", text: $repsArr[numOfSet])
-//                            .keyboardType(.numberPad)
+                            .keyboardType(.numberPad)
+                    }
+                    .swipeActions(edge: .trailing) {
+                        
+                        // Delete one field of sets
+                        Button(role: .destructive) { deleteOneFieldOdSet(numOfSet: numOfSet) } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                        .tint(.red)
                     }
 
                 }
@@ -66,9 +88,18 @@ struct CreateNewExerciseView: View {
         }
     }
     
+    private func deleteOneFieldOdSet(numOfSet: Int) {
+        weightArr = weightArr.filter{$0 != weightArr[numOfSet]}
+        repsArr = repsArr.filter{$0 != repsArr[numOfSet]}
+        
+        numOfFields -= 1
+    }
+    
     private func addFieldOfSet() {
         saveSetsFromFields()
         numOfFields += 1
+        weightArr = Array(weightArr) + [""]
+        repsArr = Array(repsArr) + [""]
     }
     
     private func saveSetsFromFields() {
@@ -83,10 +114,19 @@ struct CreateNewExerciseView: View {
     private func saveNewExercise() {
         saveSetsFromFields()
         
-        newExercise = Exercise(context: viewContext)
+        if (newExercise == nil) {
+            newExercise = Exercise(context: viewContext)
+            newExercise?.serial = inWorkout.exersices!.count > 0 ? generateSerial() : 0
+        }
+        
+        
         newExercise?.name = name != "" ? name : "Name is empty"
         newExercise?.desc = desc
-        newExercise?.serial = inWorkout.exersices!.count > 0 ? generateSerial() : 0
+//        newExercise?.serial = inWorkout.exersices!.count > 0 ? generateSerial() : 0
+        
+        if (!sets.isEmpty) {
+            newExercise?.sets = NSSet(array: [])
+        }
         
         for oneSet in 1 ..< fieldsOfSet.count+1 {
             let newSet = SetOfExercise(context: viewContext)
@@ -94,11 +134,8 @@ struct CreateNewExerciseView: View {
             newSet.weight = (fieldsOfSet[oneSet]!["Weight"]) != "" ? Float(fieldsOfSet[oneSet]!["Weight"]!.replacingOccurrences(of: ",", with: "."))! : 0.0
             newSet.reps = fieldsOfSet[oneSet]!["Reps"] != "" ? Int16(fieldsOfSet[oneSet]!["Reps"]!)! : 0
             newExercise?.addToSets(newSet)
-//            sets.append(newSet)
         }
         
-        
-//        newExercise?.sets = NSSet(array: sets)
         newExercise?.inWorkout = inWorkout
         
         dataHolder.saveContext(viewContext)
@@ -106,13 +143,14 @@ struct CreateNewExerciseView: View {
     }
     
     private func generateSerial() -> Int32{
-        var newSerial = inWorkout.exersices!.count
-        (inWorkout.exersices?.allObjects as! [Exercise]).forEach({ ex in
-            if ex.serial >= newSerial {
-                newSerial = Int(ex.serial+1)
-            }
-        })
-        return Int32(newSerial)
+//        var newSerial = inWorkout.exersices!.count
+//        (inWorkout.exersices?.allObjects as! [Exercise]).forEach({ ex in
+//            if ex.serial >= newSerial {
+//                newSerial = Int(ex.serial+1)
+//            }
+//        })
+//        return Int32(newSerial)
+        return (inWorkout.exersices?.allObjects as! [Exercise]).max(by: {$0.serial < $1.serial})!.serial + 1
     }
 }
 

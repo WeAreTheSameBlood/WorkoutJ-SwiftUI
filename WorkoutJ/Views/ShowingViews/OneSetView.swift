@@ -13,14 +13,16 @@ struct OneSetView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            Text("\(String(format: "%.1f", oneSet.weight))").padding(7)
+            oneSet.weight.truncatingRemainder(dividingBy: 1) == 0
+            ? Text("\(String(format: "%.0f", oneSet.weight))").padding(7)
+            : Text("\(String(format: "%.1f", oneSet.weight))").padding(7)
             Divider()
-            Text("\(oneSet.reps.description)").padding(7)
+            Text("x\(oneSet.reps.description)").padding(7)
         }
         .listStyle(InsetListStyle())
         .frame(minWidth: 0, maxWidth: .infinity)
         .background(Color.gray.opacity(0.2))
-        .cornerRadius(15)
+        .cornerRadius(12)
         
     }
 }
