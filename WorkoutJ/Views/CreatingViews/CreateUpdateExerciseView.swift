@@ -23,8 +23,8 @@ struct CreateUpdateExerciseView: View {
     
     @State var fieldsOfSet: [Int : [String:String]] = [:]
     
-    @State var weightArr : [String] = [""]
-    @State var repsArr : [String] = [""]
+    @State var weightArr : [String] = []
+    @State var repsArr : [String] = []
     
     init(inWorkout: Workout) {
         _name = State(initialValue: "")
@@ -32,6 +32,9 @@ struct CreateUpdateExerciseView: View {
         _sets = State(initialValue: [])
         _inWorkout = State(initialValue: inWorkout)
         _numOfFields = State(initialValue: 1)
+        
+        _weightArr = State(initialValue: [""])
+        _repsArr = State(initialValue: [""])
     }
     
     init(exercise: Exercise) {
@@ -42,8 +45,8 @@ struct CreateUpdateExerciseView: View {
         _inWorkout = State(initialValue: exercise.inWorkout!)
         _numOfFields = State(initialValue: exercise.sets!.count)
         
-        _weightArr = State(initialValue: sets.map{String($0.weight)})
-        _repsArr = State(initialValue: sets.map{String($0.reps)})
+        _weightArr = State(initialValue: Array(sets.sorted(by: {$0.serial < $1.serial}).map{String($0.weight)}))
+        _repsArr = State(initialValue: Array(sets.sorted(by: {$0.serial < $1.serial}).map{String($0.reps)}))
         
     }
     
@@ -65,7 +68,7 @@ struct CreateUpdateExerciseView: View {
                             .keyboardType(.numberPad)
                     }
                     .swipeActions(edge: .trailing) {
-                        
+
                         // Delete one field of sets
                         Button(role: .destructive) { deleteOneFieldOdSet(numOfSet: numOfSet) } label: {
                             Label("Delete", systemImage: "trash")

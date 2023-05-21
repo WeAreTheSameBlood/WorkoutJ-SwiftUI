@@ -63,6 +63,12 @@ struct PersistenceController {
             }
         }
         
+        let newPerson = Person(context: viewContext)
+        newPerson.name = "Andrii H."
+        newPerson.weight = 86.5
+        newPerson.fatPercent = 12
+        
+        
         do {
             try viewContext.save()
         } catch {

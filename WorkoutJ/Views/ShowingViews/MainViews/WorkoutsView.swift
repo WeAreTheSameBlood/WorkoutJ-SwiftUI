@@ -10,15 +10,13 @@ import CoreData
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    
     @EnvironmentObject var dataHolder: DataHolder
 
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Workout.serial, ascending: false)],
-        animation: .default)
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Workout.serial, ascending: false)])
     var workouts: FetchedResults<Workout>
     
     @State private var selectedWorkoutForUpdate: Workout?
+    @State private var toPersonView = false
 
     var body: some View {
         NavigationView {
@@ -32,29 +30,29 @@ struct ContentView: View {
                         Section(header: Text("Planed")) {
                             ForEach(workouts) { workout in
                                 if (workout.isComplete == false) {
-                                    NavigationLink( destination: OneWorkoutPlanView(workout: workout)) {
-                                        WorkoutCellView(workout: workout)
-                                            .environmentObject(dataHolder)
-                                    }
-                                    .swipeActions(edge: .leading) {
-                                        
-                                        // Share one workout
-                                        Button { shareWorkoutLikeStr(workoutForShare: workout) } label: {
-                                            Label("Share", systemImage: "square.and.arrow.up")
-                                        }
-                                        .tint(.blue)
-                                        
-                                        // Update one workout
-                                        Button { selectedWorkoutForUpdate = workout } label: {
-                                            Label("Edit", systemImage: "square.and.pencil")
-                                        }
-                                        .tint(.green)
-                                    }
-                                    .sheet(item: $selectedWorkoutForUpdate) { workout in
-                                        CreateUpdateWorkoutView(workout: workout)
-                                            .onDisappear { selectedWorkoutForUpdate = nil }
+                                    VStack {
+                                        OneWorkoutCellView(workout: workout).environmentObject(dataHolder)
+                                            .swipeActions(edge: .leading) {
+                                                
+                                                // Share one workout
+                                                Button { shareWorkoutLikeStr(workoutForShare: workout) } label: {
+                                                    Label("Share", systemImage: "square.and.arrow.up")
+                                                }
+                                                .tint(.blue)
+                                                
+                                                // Update one workout
+                                                Button { selectedWorkoutForUpdate = workout } label: {
+                                                    Label("Edit", systemImage: "square.and.pencil")
+                                                }
+                                                .tint(.green)
+                                            }
+                                            .sheet(item: $selectedWorkoutForUpdate) { workout in
+                                                CreateUpdateWorkoutView(workout: workout)
+                                                    .onDisappear { selectedWorkoutForUpdate = nil }
+                                            }
                                     }
                                 }
+                                    
                             }
                             .onMove(perform: moveWorkout)
                             .onDelete(perform: deleteWorkout)
@@ -63,7 +61,7 @@ struct ContentView: View {
                             ForEach(workouts) { workout in
                                 if (workout.isComplete == true) {
                                     NavigationLink( destination: OneWorkoutPlanView(workout: workout)) {
-                                        WorkoutCellView(workout: workout)
+                                        OneWorkoutCellView(workout: workout)
                                             .environmentObject(dataHolder)
                                     }
                                     .swipeActions(edge: .leading) {
@@ -84,6 +82,13 @@ struct ContentView: View {
                                         CreateUpdateWorkoutView(workout: workout)
                                             .onDisappear { selectedWorkoutForUpdate = nil }
                                     }
+                                    
+//                                    .swipeActions(edge: .trailing) {
+//                                        Button { /* delete workout logic */ print("Workout \(workout.name!) was deleted")} label: {
+//                                            Label("Delete", systemImage: "trash")
+//                                        }
+//                                        .tint(.red)
+//                                    }
                                 }
                             }
                             .onMove(perform: moveWorkout)
@@ -93,7 +98,8 @@ struct ContentView: View {
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        EditButton()
+                        // Open person's view
+                        OpenPersonStatsBtnView()
                     }
                 }
                 AddWorkoutBtnView()
@@ -109,19 +115,19 @@ struct ContentView: View {
     
     private func deleteWorkout(at offsets: IndexSet) {
         offsets.map { workouts[$0] }.forEach(viewContext.delete)
-        var serial = Int32(workouts.count-1)
-        workouts.forEach { workout in
-            workout.serial = serial
-            serial-=1
-        }
-        dataHolder.saveContext(viewContext)
+//        var serial = Int32(workouts.count-1)
+//        workouts.forEach { workout in
+//            workout.serial = serial
+//            serial-=1
+//        }
+//        dataHolder.saveContext(viewContext)
     }
     
     private func moveWorkout(from source: IndexSet, to destination: Int) {
         var workoutsArray: [Workout] = Array(workouts)
         workoutsArray.move(fromOffsets: source, toOffset: destination)
         updateSerialInArray(array: workoutsArray)
-        
+
         dataHolder.saveContext(viewContext)
     }
     

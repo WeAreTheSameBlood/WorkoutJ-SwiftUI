@@ -13,11 +13,10 @@ struct OneWorkoutPlanView: View {
     
     @ObservedObject var workout: Workout
     
-    @State var toUpdateExercise: Bool = false
+    @State private var selectedExerciseForUpdate: Exercise?
     
     var body: some View {
         let sortedExercises = workout.exersices?.sortedArray(using: [NSSortDescriptor(key: "serial", ascending: true)]) as! [Exercise]
-        
         ZStack {
             List {
                 if (workout.desc != "") {
@@ -29,23 +28,18 @@ struct OneWorkoutPlanView: View {
                     Section(header: Text("Exercises")) {
                         ForEach(sortedExercises) { exercise in
                             VStack {
-                                OneExerciseView(exercise: exercise)
+                                OneExerciseCellView(exercise: exercise)
                                     .swipeActions(edge: .leading) {
                                         
-                                        /*
-                                         Found bug with update realization
-                                         If you use exercise as parameter for CreateUpdateExerciseView(exercise: exercise),
-                                         you will open view with first exercise in exercises
-                                         */
-                                        
                                         // Update one workout
-                                        Button { toUpdateExercise = !toUpdateExercise } label: {
+                                        Button { selectedExerciseForUpdate = exercise } label: {
                                             Label("Update", systemImage: "square.and.pencil")
                                         }
                                         .tint(.green)
                                     }
-                                    .sheet(isPresented: $toUpdateExercise) {
+                                    .sheet(item: $selectedExerciseForUpdate) { exercise in
                                         CreateUpdateExerciseView(exercise: exercise)
+                                            .onDisappear { selectedExerciseForUpdate = nil }
                                     }
                             }
                         }

@@ -69,8 +69,8 @@ struct CreateUpdateWorkoutView: View {
     private func saveNewItem() {
         if (newWorkout == nil) {
             newWorkout = Workout(context: viewContext)
-            newWorkout?.createdDate = createdDate
-            newWorkout?.serial = createNewSerial()
+            newWorkout?.createdDate =  createdDate
+            newWorkout?.serial = workouts.isEmpty ? 0 : createNewSerial()
             newWorkout?.isComplete = false
         }
         newWorkout?.name = name != "" ? name : "Name is empty"

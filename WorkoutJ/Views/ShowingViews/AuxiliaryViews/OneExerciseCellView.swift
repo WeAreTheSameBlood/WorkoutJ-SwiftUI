@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct OneExerciseView: View {
+struct OneExerciseCellView: View {
     
     @ObservedObject var exercise: Exercise
     
@@ -33,15 +33,8 @@ struct OneExerciseView: View {
     }
     
     private func setsOfExerciseInfo(exercise: Exercise) -> AnyView {
-        
         guard exercise.sets!.count > 0 else { return AnyView( Text("Sets not yet added").opacity(0.5)) }
-        
         let sets = exercise.sets!.sortedArray(using: [NSSortDescriptor(key: "serial", ascending: true)]) as! [SetOfExercise]
-//        var setsInfo = ""
-//
-//        for oneSet in sets {
-//            setsInfo += "\n\tWeight: \(String(format: "%.1f", oneSet.weight)) kg\tReps: \(oneSet.reps)"
-//        }
         
         return AnyView(
             VStack {
@@ -54,7 +47,6 @@ struct OneExerciseView: View {
                 }
             }
         )
-        
     }
 }
 
