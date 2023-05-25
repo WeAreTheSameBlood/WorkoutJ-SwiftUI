@@ -14,8 +14,7 @@ struct CreateUpdateWorkoutView: View {
     @EnvironmentObject var dataHolder: DataHolder
     
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Workout.completeDate, ascending: true)],
-        animation: .default)
+        sortDescriptors: [NSSortDescriptor(keyPath: \Workout.completeDate, ascending: true)])
     private var workouts: FetchedResults<Workout>
     
     @State var newWorkout: Workout?
@@ -69,7 +68,7 @@ struct CreateUpdateWorkoutView: View {
     private func saveNewItem() {
         if (newWorkout == nil) {
             newWorkout = Workout(context: viewContext)
-            newWorkout?.createdDate =  createdDate
+            newWorkout?.createdDate = createdDate
             newWorkout?.serial = workouts.isEmpty ? 0 : createNewSerial()
             newWorkout?.isComplete = false
         }

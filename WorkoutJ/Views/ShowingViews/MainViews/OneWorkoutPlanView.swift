@@ -41,9 +41,18 @@ struct OneWorkoutPlanView: View {
                                         CreateUpdateExerciseView(exercise: exercise)
                                             .onDisappear { selectedExerciseForUpdate = nil }
                                     }
+                                    .swipeActions(edge: .trailing) {
+                                        
+                                        // Delete one workout
+                                        Button(role: .destructive) {
+                                            deleteExercise(exerciseToDelete: exercise)
+                                        } label: {
+                                            Label("Delete", systemImage: "trash")
+                                        }
+                                        .tint(.red)
+                                    }
                             }
                         }
-                        .onDelete(perform: deleteExercise)
                         .onMove(perform: moveExercise)
                     }
                 } else {
@@ -83,13 +92,9 @@ struct OneWorkoutPlanView: View {
         }
     }
     
-    private func deleteExercise(at offsets: IndexSet) {
-        var sortedExercises = workout.exersices?.sortedArray(using: [NSSortDescriptor(key: "serial", ascending: true)]) as! [Exercise]
+    private func deleteExercise(exerciseToDelete: Exercise) {
         withAnimation {
-            sortedExercises.remove(atOffsets: offsets)
-            updateSerialInArray(array: sortedExercises)
-            
-            workout.exersices? = NSSet(array: sortedExercises)
+            viewContext.delete(exerciseToDelete)
             dataHolder.saveContext(viewContext)
         }
     }

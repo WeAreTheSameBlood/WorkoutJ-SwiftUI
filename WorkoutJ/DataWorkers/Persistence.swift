@@ -63,11 +63,30 @@ struct PersistenceController {
             }
         }
         
-        let newPerson = Person(context: viewContext)
-        newPerson.name = "Andrii H."
-        newPerson.weight = 86.5
-        newPerson.fatPercent = 12
+//        let personProps = Person(context: viewContext)
+//        personProps.name = "Default name"
+//        personProps.weight = 88.6
+//        personProps.fatPercent = 12.3
         
+//        let size1 = PersonSizes(context: viewContext)
+//        size1.chest = 40
+//        size1.leftForearm = 40
+//        size1.rightForearm = 40
+//        size1.neck = 40
+//        size1.leftLeg = 40
+//        size1.rightLeg = 40
+//        size1.leftGastrocnemius = 40
+//        size1.rightGastrocnemius = 40
+//        size1.leftHand = 40
+//        size1.rightHand = 50
+//        size1.shoulders = 50
+//        size1.waist = 50
+//        personProps.sizes = size1
+//
+//        let perf = PersonPerformance(context: viewContext)
+//        perf.nameExersice = "Name of 1 perf"
+//        perf.weight = 123
+//        perf.percentOfMax = 60
         
         do {
             try viewContext.save()

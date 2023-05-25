@@ -8,17 +8,14 @@
         <relationship name="sets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SetOfExercise" inverseName="toExersice" inverseEntity="SetOfExercise"/>
     </entity>
     <entity name="Person" representedClassName="Person" syncable="YES">
-        <attribute name="fatPercent" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="fatPercent" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="weight" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="performance" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PersonPerformance" inverseName="person" inverseEntity="PersonPerformance"/>
-        <relationship name="sizes" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PersonSizes" inverseName="person" inverseEntity="PersonSizes"/>
+        <attribute name="weight" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
     <entity name="PersonPerformance" representedClassName="PersonPerformance" syncable="YES">
         <attribute name="nameExersice" optional="YES" attributeType="String"/>
         <attribute name="percentOfMax" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="weight" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="person" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="performance" inverseEntity="Person"/>
     </entity>
     <entity name="PersonSizes" representedClassName="PersonSizes" syncable="YES">
         <attribute name="chest" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -33,7 +30,6 @@
         <attribute name="rightLeg" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="shoulders" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="waist" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="person" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="sizes" inverseEntity="Person"/>
     </entity>
     <entity name="SetOfExercise" representedClassName="SetOfExercise" syncable="YES">
         <attribute name="reps" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>

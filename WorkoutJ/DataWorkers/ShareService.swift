@@ -36,7 +36,7 @@ private func getWorkoutInfoToStr(workoutModel: WorkoutShareModel) -> String {
 }
 
 private func getExercisesInfoToStr(exercisesModel: [ExerciseShareModel]) -> String {
-    var result: String = "\n:"
+    var result: String = "\n"
     
     exercisesModel.forEach { exercise in
         result.append("""

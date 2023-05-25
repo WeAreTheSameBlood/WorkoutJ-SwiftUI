@@ -14,12 +14,12 @@ struct OneExerciseCellView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Text("\(exercise.name!)").frame(alignment: .leading)
+                Text("\(exercise.name ?? "Error name exercise")").frame(alignment: .leading)
                 Spacer()
             }
-            if (exercise.desc! != "") {
+            if ((exercise.desc ?? "Error desc in exercise") != "") {
                 HStack {
-                    Text("\(exercise.desc!)")
+                    Text("\(exercise.desc ?? "Error desc in exercise")")
                         .frame(alignment: .leading)
                         .opacity(2/3)
                     Spacer()
@@ -33,7 +33,7 @@ struct OneExerciseCellView: View {
     }
     
     private func setsOfExerciseInfo(exercise: Exercise) -> AnyView {
-        guard exercise.sets!.count > 0 else { return AnyView( Text("Sets not yet added").opacity(0.5)) }
+        guard (exercise.sets?.count ?? 0) > 0 else { return AnyView( Text("Sets not yet added").opacity(0.5)) }
         let sets = exercise.sets!.sortedArray(using: [NSSortDescriptor(key: "serial", ascending: true)]) as! [SetOfExercise]
         
         return AnyView(

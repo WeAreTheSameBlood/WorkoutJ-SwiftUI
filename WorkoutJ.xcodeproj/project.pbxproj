@@ -38,6 +38,7 @@
 		377C62502A1A725500383082 /* PersonPerformance+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377C624A2A1A725500383082 /* PersonPerformance+CoreDataProperties.swift */; };
 		377C62512A1A725500383082 /* Person+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377C624B2A1A725500383082 /* Person+CoreDataClass.swift */; };
 		377C62522A1A725500383082 /* Person+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377C624C2A1A725500383082 /* Person+CoreDataProperties.swift */; };
+		379424AF2A1E14E00068D7C5 /* NumberFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379424AE2A1E14E00068D7C5 /* NumberFields.swift */; };
 		37DCB8952A104882000AF931 /* REF_ToModelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCB8942A104882000AF931 /* REF_ToModelExtension.swift */; };
 		37DCB8972A1048A0000AF931 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCB8962A1048A0000AF931 /* Formatter.swift */; };
 		37DCB89D2A1049DA000AF931 /* OneSetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCB89C2A1049DA000AF931 /* OneSetView.swift */; };
@@ -79,6 +80,7 @@
 		377C624A2A1A725500383082 /* PersonPerformance+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersonPerformance+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		377C624B2A1A725500383082 /* Person+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		377C624C2A1A725500383082 /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		379424AE2A1E14E00068D7C5 /* NumberFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFields.swift; sourceTree = "<group>"; };
 		37DCB8942A104882000AF931 /* REF_ToModelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = REF_ToModelExtension.swift; sourceTree = "<group>"; };
 		37DCB8962A1048A0000AF931 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		37DCB89C2A1049DA000AF931 /* OneSetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneSetView.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 			children = (
 				37DCB8942A104882000AF931 /* REF_ToModelExtension.swift */,
 				37DCB8962A1048A0000AF931 /* Formatter.swift */,
+				379424AE2A1E14E00068D7C5 /* NumberFields.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -327,6 +330,7 @@
 				377C62402A19051800383082 /* OneWorkoutInfoView.swift in Sources */,
 				37DCB8952A104882000AF931 /* REF_ToModelExtension.swift in Sources */,
 				377C624F2A1A725500383082 /* PersonPerformance+CoreDataClass.swift in Sources */,
+				379424AF2A1E14E00068D7C5 /* NumberFields.swift in Sources */,
 				370737222A003F86009B9514 /* AddExerciseBtnView.swift in Sources */,
 				370737302A09147D009B9514 /* SetOfExercise+CoreDataProperties.swift in Sources */,
 				370736FD29FDC697009B9514 /* WorkoutsView.swift in Sources */,

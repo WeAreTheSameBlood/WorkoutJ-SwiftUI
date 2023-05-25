@@ -2,7 +2,7 @@
 //  PersonPerformance+CoreDataProperties.swift
 //  WorkoutJ
 //
-//  Created by Andrii Hlybchenko on 21.05.2023.
+//  Created by Andrii Hlybchenko on 25.05.2023.
 //
 //
 
@@ -17,9 +17,8 @@ extension PersonPerformance {
     }
 
     @NSManaged public var nameExersice: String?
-    @NSManaged public var weight: Double
     @NSManaged public var percentOfMax: Int16
-    @NSManaged public var person: Person?
+    @NSManaged public var weight: Double
 
 }
 

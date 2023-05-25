@@ -16,12 +16,12 @@ struct OneWorkoutInfoView: View {
             NavigationLink(destination: OneWorkoutPlanView(workout: workout )) {
                 VStack(spacing: 0) {
                     HStack {
-                        Text("\(workout.name!)").opacity(1)
+                        Text("\(workout.name ?? "Error of name")").opacity(1)
                         Spacer()
                     }
                     if (workout.desc != "")  {
                         HStack {
-                            Text(workout.desc!)
+                            Text(workout.desc ?? "Error of desc")
                                 .lineLimit(1)
                                 .truncationMode(.tail)
                                 .opacity(2/3)
@@ -29,7 +29,7 @@ struct OneWorkoutInfoView: View {
                         }
                     }
                     HStack {
-                        (workout.exersices!.count > 0
+                        ((workout.exersices?.count ?? 0) > 0
                          ? (Text("Exercises: \(String(describing: workout.exersices!.count))").opacity(1))
                          : (Text("No exercises").opacity(0.5)))
                         Spacer()
