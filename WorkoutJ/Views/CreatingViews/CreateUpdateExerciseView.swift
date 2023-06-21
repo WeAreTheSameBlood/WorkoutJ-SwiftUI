@@ -119,7 +119,7 @@ struct CreateUpdateExerciseView: View {
         
         if (newExercise == nil) {
             newExercise = Exercise(context: viewContext)
-            newExercise?.serial = inWorkout.exersices!.count > 0 ? generateSerial() : 0
+            newExercise?.serial = inWorkout.exercises!.count > 0 ? generateSerial() : 0
         }
         
         
@@ -153,7 +153,7 @@ struct CreateUpdateExerciseView: View {
 //            }
 //        })
 //        return Int32(newSerial)
-        return (inWorkout.exersices?.allObjects as! [Exercise]).max(by: {$0.serial < $1.serial})!.serial + 1
+        return (inWorkout.exercises?.allObjects as! [Exercise]).max(by: {$0.serial < $1.serial})!.serial + 1
     }
 }
 

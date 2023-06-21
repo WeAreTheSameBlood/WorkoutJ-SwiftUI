@@ -14,9 +14,10 @@ struct OneWorkoutPlanView: View {
     @ObservedObject var workout: Workout
     
     @State private var selectedExerciseForUpdate: Exercise?
+    @State private var showInfo: Bool = false
     
     var body: some View {
-        let sortedExercises = workout.exersices?.sortedArray(using: [NSSortDescriptor(key: "serial", ascending: true)]) as! [Exercise]
+        let sortedExercises = workout.exercises?.sortedArray(using: [NSSortDescriptor(key: "serial", ascending: true)]) as! [Exercise]
         ZStack {
             List {
                 if (workout.desc != "") {
@@ -61,6 +62,7 @@ struct OneWorkoutPlanView: View {
                         .padding(15)
                         .multilineTextAlignment(.center)
                 }
+                workoutInfoSection(workout: workout)
             }
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -82,12 +84,12 @@ struct OneWorkoutPlanView: View {
     }
     
     private func moveExercise(from source: IndexSet, to destination: Int) {
-        var sortedExercises = workout.exersices?.sortedArray(using: [NSSortDescriptor(key: "serial", ascending: true)]) as! [Exercise]
+        var sortedExercises = workout.exercises?.sortedArray(using: [NSSortDescriptor(key: "serial", ascending: true)]) as! [Exercise]
         withAnimation {
             sortedExercises.move(fromOffsets: source, toOffset: destination)
             updateSerialInArray(array: sortedExercises)
             
-            workout.exersices? = NSSet(array: sortedExercises)
+            workout.exercises? = NSSet(array: sortedExercises)
             dataHolder.saveContext(viewContext)
         }
     }
@@ -103,6 +105,25 @@ struct OneWorkoutPlanView: View {
         for i in 0..<array.count {
             array[i].serial = Int32(i)
         }
+    }
+    
+    private func workoutInfoSection(workout: Workout) -> AnyView {
+        return AnyView(
+            Section(header: Text("Information")) {
+                Text(showInfo ? "Tap to hide info" : "Tap to show info")
+                    .opacity(2/3)
+                    .onTapGesture {
+                        showInfo = !showInfo
+                    }
+                if (showInfo) {
+                    Text("""
+                     Exercises: \(workout.exercises!.count)
+                     \nExpected date: \(workout.expectedDate != nil ? dateToStr(date: workout.expectedDate!) : "---")
+                     Complete date: \(workout.completeDate != nil ? dateToStr(date: workout.completeDate!) : "---")
+                     """)
+                }
+            }
+        )
     }
 }
 

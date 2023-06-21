@@ -13,12 +13,11 @@ struct OpenPersonStatsBtnView: View {
     @EnvironmentObject var dataHolder: DataHolder
     
     var body: some View {
-        HStack{
+        HStack {
             NavigationLink(
-//                destination: PersonView()
-                destination: EmptyView()
-                .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-                .environmentObject(dataHolder)
+                destination: PersonView()
+                    .environment(\.managedObjectContext, viewContext)
+                    .environmentObject(dataHolder)
             ){
                 Image(systemName: "person")
                     .imageScale(.large)
@@ -30,7 +29,11 @@ struct OpenPersonStatsBtnView: View {
 }
 
 struct OpenPersonStatsBtnView_Previews: PreviewProvider {
+    @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject var dataHolder: DataHolder
     static var previews: some View {
         OpenPersonStatsBtnView()
+            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+            .environmentObject(DataHolder(PersistenceController.shared.container.viewContext))
     }
 }

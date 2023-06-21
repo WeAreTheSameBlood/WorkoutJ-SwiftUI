@@ -23,6 +23,8 @@ struct CreateUpdateWorkoutView: View {
     @State var createdDate: Date
     @State var onDateBool: Bool
     @State var expectedDate: Date
+    @State var isComplete: Bool
+    @State var completedDate: Date
     
     init() {
         _name = State(initialValue: "")
@@ -30,6 +32,8 @@ struct CreateUpdateWorkoutView: View {
         _onDateBool = State(initialValue: false)
         _createdDate = State(initialValue: Date())
         _expectedDate = State(initialValue: Date())
+        _isComplete = State(initialValue: false)
+        _completedDate = State(initialValue: Date())
     }
     
     init(workout: Workout) {
@@ -39,6 +43,8 @@ struct CreateUpdateWorkoutView: View {
         _onDateBool = State(initialValue: workout.onDateBool)
         _createdDate = State(initialValue: workout.createdDate!)
         _expectedDate = State(initialValue: workout.expectedDate ?? Date())
+        _isComplete = State(initialValue: workout.isComplete)
+        _completedDate = State(initialValue: workout.completeDate ?? Date())
     }
     
     var body: some View {
@@ -53,6 +59,16 @@ struct CreateUpdateWorkoutView: View {
                     withAnimation() {
                         DatePicker("On date",
                                    selection: $expectedDate,
+                                   displayedComponents: [.date])
+                    }
+                }
+            }
+            if (newWorkout?.isComplete == true) {
+                Section(header: Text("Completed date")) {
+                    Toggle("Complete status", isOn: $isComplete)
+                    if isComplete {
+                        DatePicker("Completed date",
+                                   selection: $completedDate,
                                    displayedComponents: [.date])
                     }
                 }
@@ -76,6 +92,11 @@ struct CreateUpdateWorkoutView: View {
         newWorkout?.desc = desc
         newWorkout?.onDateBool = onDateBool
         newWorkout?.expectedDate = expectedDate
+        
+        newWorkout?.isComplete = isComplete
+        if ((newWorkout?.isComplete ?? false) && completedDate <= Date()) {
+            newWorkout?.completeDate = completedDate
+        }
         
         dataHolder.saveContext(viewContext)
         self.presentationMode.wrappedValue.dismiss()

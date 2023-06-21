@@ -12,7 +12,7 @@ struct OneExerciseCellView: View {
     @ObservedObject var exercise: Exercise
     
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(spacing: 1) {
             HStack {
                 Text("\(exercise.name ?? "Error name exercise")").frame(alignment: .leading)
                 Spacer()
@@ -20,6 +20,7 @@ struct OneExerciseCellView: View {
             if ((exercise.desc ?? "Error desc in exercise") != "") {
                 HStack {
                     Text("\(exercise.desc ?? "Error desc in exercise")")
+                        .padding(5)
                         .frame(alignment: .leading)
                         .opacity(2/3)
                     Spacer()

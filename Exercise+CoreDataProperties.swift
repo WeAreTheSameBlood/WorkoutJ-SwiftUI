@@ -2,7 +2,7 @@
 //  Exercise+CoreDataProperties.swift
 //  WorkoutJ
 //
-//  Created by Andrii Hlybchenko on 14.05.2023.
+//  Created by Andrii Hlybchenko on 21.06.2023.
 //
 //
 
@@ -16,9 +16,9 @@ extension Exercise {
         return NSFetchRequest<Exercise>(entityName: "Exercise")
     }
 
+    @NSManaged public var desc: String?
     @NSManaged public var name: String?
     @NSManaged public var serial: Int32
-    @NSManaged public var desc: String?
     @NSManaged public var inWorkout: Workout?
     @NSManaged public var sets: NSSet?
 

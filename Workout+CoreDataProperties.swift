@@ -2,7 +2,7 @@
 //  Workout+CoreDataProperties.swift
 //  WorkoutJ
 //
-//  Created by Andrii Hlybchenko on 14.05.2023.
+//  Created by Andrii Hlybchenko on 21.06.2023.
 //
 //
 
@@ -24,24 +24,24 @@ extension Workout {
     @NSManaged public var name: String?
     @NSManaged public var onDateBool: Bool
     @NSManaged public var serial: Int32
-    @NSManaged public var exersices: NSSet?
+    @NSManaged public var exercises: NSSet?
 
 }
 
-// MARK: Generated accessors for exersices
+// MARK: Generated accessors for exercises
 extension Workout {
 
-    @objc(addExersicesObject:)
-    @NSManaged public func addToExersices(_ value: Exercise)
+    @objc(addExercisesObject:)
+    @NSManaged public func addToExercises(_ value: Exercise)
 
-    @objc(removeExersicesObject:)
-    @NSManaged public func removeFromExersices(_ value: Exercise)
+    @objc(removeExercisesObject:)
+    @NSManaged public func removeFromExercises(_ value: Exercise)
 
-    @objc(addExersices:)
-    @NSManaged public func addToExersices(_ values: NSSet)
+    @objc(addExercises:)
+    @NSManaged public func addToExercises(_ values: NSSet)
 
-    @objc(removeExersices:)
-    @NSManaged public func removeFromExersices(_ values: NSSet)
+    @objc(removeExercises:)
+    @NSManaged public func removeFromExercises(_ values: NSSet)
 
 }
 

@@ -32,11 +32,11 @@ struct PersistenceController {
                 newWorkout.completeDate = Date()
             }
             newWorkout.createdDate = Date()
-            newWorkout.exersices = []
+            newWorkout.exercises = []
             
-            ex1.name = "Exercice name for \(num) workout"
-            ex2.name = "Exercice name for \(num) workout"
-            ex3.name = "Exercice name for \(num) workout"
+            ex1.name = "Exercise name for \(num) workout"
+            ex2.name = "Exercise name for \(num) workout"
+            ex3.name = "Exercise name for \(num) workout"
             
             ex1.desc = ""
             ex2.desc = ""
@@ -46,9 +46,9 @@ struct PersistenceController {
             ex2.serial = 1
             ex3.serial = 2
 
-            newWorkout.exersices = [ex1, ex2, ex3]
+            newWorkout.exercises = [ex1, ex2, ex3]
             
-            for ex in (newWorkout.exersices?.allObjects as! [Exercise]) {
+            for ex in (newWorkout.exercises?.allObjects as! [Exercise]) {
                 var setsArr : [SetOfExercise] = []
                 
                 for set in 1...4 {
@@ -63,10 +63,11 @@ struct PersistenceController {
             }
         }
         
-//        let personProps = Person(context: viewContext)
-//        personProps.name = "Default name"
-//        personProps.weight = 88.6
-//        personProps.fatPercent = 12.3
+        let personProps = Person(context: viewContext)
+        personProps.serial = Int16(0)
+        personProps.name = "Default name"
+        personProps.weight = 88.6
+        personProps.fatPercent = 12.3
         
 //        let size1 = PersonSizes(context: viewContext)
 //        size1.chest = 40

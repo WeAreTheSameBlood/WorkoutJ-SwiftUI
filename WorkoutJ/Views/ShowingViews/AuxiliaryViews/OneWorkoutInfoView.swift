@@ -29,8 +29,8 @@ struct OneWorkoutInfoView: View {
                         }
                     }
                     HStack {
-                        ((workout.exersices?.count ?? 0) > 0
-                         ? (Text("Exercises: \(String(describing: workout.exersices!.count))").opacity(1))
+                        ((workout.exercises?.count ?? 0) > 0
+                         ? (Text("Exercises: \(String(describing: workout.exercises!.count))").opacity(1))
                          : (Text("No exercises").opacity(0.5)))
                         Spacer()
                     }

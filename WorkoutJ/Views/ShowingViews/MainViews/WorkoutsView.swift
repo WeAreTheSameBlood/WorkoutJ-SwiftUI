@@ -82,6 +82,12 @@ struct ContentView: View {
                                             Label("Edit", systemImage: "square.and.pencil")
                                         }
                                         .tint(.green)
+                                        
+                                        // Clone one workout
+                                        Button {cloneOneWorkout(workout: workout)} label: {
+                                            Label("Clone", systemImage: "doc.on.doc")
+                                        }
+                                        .tint(.orange)
                                     }
                                     .sheet(item: $selectedWorkoutForUpdate) { workout in
                                         CreateUpdateWorkoutView(workout: workout)
@@ -106,10 +112,11 @@ struct ContentView: View {
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
+                        
                         // Open person's view
-//                        OpenPersonStatsBtnView()
-//                            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-//                            .environmentObject(dataHolder)
+                        OpenPersonStatsBtnView()
+                            .environment(\.managedObjectContext, viewContext)
+                            .environmentObject(dataHolder)
                     }
                 }
                 AddWorkoutBtnView()
@@ -122,7 +129,9 @@ struct ContentView: View {
     private func share(for workout: Workout) {
         shareWorkoutLikeStr(workoutForShare: workout)
     }
-
+    
+    private func cloneOneWorkout(workout: Workout) {
+    }
     
     private func deleteWorkout(workoutToDelete: Workout) {
         withAnimation {
