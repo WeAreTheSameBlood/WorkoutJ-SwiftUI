@@ -45,6 +45,12 @@ struct ContentView: View {
                                                     Label("Edit", systemImage: "square.and.pencil")
                                                 }
                                                 .tint(.green)
+                                                
+                                                // Clone one workout
+                                                Button {cloneOneWorkout(workout: workout)} label: {
+                                                    Label("Copy", systemImage: "doc.on.doc")
+                                                }
+                                                .tint(.orange)
                                             }
                                             .sheet(item: $selectedWorkoutForUpdate) { workout in
                                                 CreateUpdateWorkoutView(workout: workout)
@@ -85,7 +91,7 @@ struct ContentView: View {
                                         
                                         // Clone one workout
                                         Button {cloneOneWorkout(workout: workout)} label: {
-                                            Label("Clone", systemImage: "doc.on.doc")
+                                            Label("Copy", systemImage: "doc.on.doc")
                                         }
                                         .tint(.orange)
                                     }
@@ -123,7 +129,7 @@ struct ContentView: View {
                     .position(x: UIScreen.main.bounds.width*0.5, y: UIScreen.main.bounds.height*0.75)
             }
         .navigationTitle(Text("Workouts"))
-        }
+        }.id(viewContext)
     }
     
     private func share(for workout: Workout) {
@@ -131,6 +137,19 @@ struct ContentView: View {
     }
     
     private func cloneOneWorkout(workout: Workout) {
+        withAnimation {
+            let cloneWorkout = Workout(context: viewContext)
+            cloneWorkout.name = "Copy of " + workout.name!
+            cloneWorkout.desc = workout.desc
+            cloneWorkout.isComplete = false
+            cloneWorkout.onDateBool = false
+            cloneWorkout.createdDate = Date()
+            cloneWorkout.serial = (workouts.first?.serial ?? Int32(workouts.count)) + 1
+            
+            cloneWorkout.exercises = cloneExercise(parentWorkout: workout)
+        }
+        
+        dataHolder.saveContext(viewContext)
     }
     
     private func deleteWorkout(workoutToDelete: Workout) {
@@ -152,6 +171,36 @@ struct ContentView: View {
         for i in 0..<array.count {
             array[array.count-i-1].serial = Int32(i)
         }
+    }
+    
+    private func cloneExercise(parentWorkout: Workout) -> NSSet {
+        var cloneExercises: [Exercise] = []
+        
+        for ex in parentWorkout.exercises?.allObjects as! [Exercise] {
+            let cloneExercise = Exercise(context: viewContext)
+            cloneExercise.serial = ex.serial
+            cloneExercise.name = ex.name
+            cloneExercise.desc = ex.desc
+            cloneExercise.category = ex.category
+            cloneExercise.textToExercise = ex.textToExercise
+            if ((ex.sets?.count ?? 0) > 0) { cloneExercise.sets = cloneSets(parentExercise: ex) }
+            cloneExercises.append(cloneExercise)
+            
+        }
+        return NSSet(array: cloneExercises)
+    }
+    
+    private func cloneSets(parentExercise: Exercise) -> NSSet {
+        var cloneSets: [SetOfExercise] = []
+        
+        for oneSet in parentExercise.sets?.allObjects as! [SetOfExercise] {
+            let newSet = SetOfExercise(context: viewContext)
+            newSet.serial = oneSet.serial
+            newSet.reps = oneSet.reps
+            newSet.weight = oneSet.weight
+            cloneSets.append(newSet)
+        }
+        return NSSet(array: cloneSets)
     }
 }
 

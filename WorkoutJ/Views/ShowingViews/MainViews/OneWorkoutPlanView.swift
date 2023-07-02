@@ -17,7 +17,6 @@ struct OneWorkoutPlanView: View {
     @State private var showInfo: Bool = false
     
     var body: some View {
-        let sortedExercises = workout.exercises?.sortedArray(using: [NSSortDescriptor(key: "serial", ascending: true)]) as! [Exercise]
         ZStack {
             List {
                 if (workout.desc != "") {
@@ -25,9 +24,9 @@ struct OneWorkoutPlanView: View {
                         Text(workout.desc!)
                     }
                 }
-                if (sortedExercises.count > 0) {
+                if ((workout.exercises?.count ?? 0) > 0) {
                     Section(header: Text("Exercises")) {
-                        ForEach(sortedExercises) { exercise in
+                        ForEach(workout.exercises?.sortedArray(using: [NSSortDescriptor(key: "serial", ascending: true)]) as! [Exercise]) { exercise in
                             VStack {
                                 OneExerciseCellView(exercise: exercise)
                                     .swipeActions(edge: .leading) {
@@ -62,14 +61,15 @@ struct OneWorkoutPlanView: View {
                         .padding(15)
                         .multilineTextAlignment(.center)
                 }
-                workoutInfoSection(workout: workout)
+                if ((workout.exercises?.count ?? 0) > 0) {
+                    workoutInfoSection(workout: workout)
+                }
             }
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Button(action: shareWorkout) {
                         Image(systemName: "square.and.arrow.up")
                     }
-                    EditButton()
                 }
             }
             AddExerciseBtnView(workout: workout)
@@ -118,7 +118,7 @@ struct OneWorkoutPlanView: View {
                 if (showInfo) {
                     Text("""
                      Exercises: \(workout.exercises!.count)
-                     \nExpected date: \(workout.expectedDate != nil ? dateToStr(date: workout.expectedDate!) : "---")
+                     Expected date: \(workout.expectedDate != nil ? dateToStr(date: workout.expectedDate!) : "---")
                      Complete date: \(workout.completeDate != nil ? dateToStr(date: workout.completeDate!) : "---")
                      """)
                 }

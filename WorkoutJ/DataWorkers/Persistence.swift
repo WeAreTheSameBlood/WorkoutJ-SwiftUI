@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import SwiftUI
 
 struct PersistenceController {
     
@@ -39,7 +40,7 @@ struct PersistenceController {
             ex3.name = "Exercise name for \(num) workout"
             
             ex1.desc = ""
-            ex2.desc = ""
+            ex2.desc = "bajksvbysdbvjhbadhhyadhjb 330"
             ex3.desc = ""
             
             ex1.serial = 0
@@ -69,25 +70,16 @@ struct PersistenceController {
         personProps.weight = 88.6
         personProps.fatPercent = 12.3
         
-//        let size1 = PersonSizes(context: viewContext)
-//        size1.chest = 40
-//        size1.leftForearm = 40
-//        size1.rightForearm = 40
-//        size1.neck = 40
-//        size1.leftLeg = 40
-//        size1.rightLeg = 40
-//        size1.leftGastrocnemius = 40
-//        size1.rightGastrocnemius = 40
-//        size1.leftHand = 40
-//        size1.rightHand = 50
-//        size1.shoulders = 50
-//        size1.waist = 50
-//        personProps.sizes = size1
-//
-//        let perf = PersonPerformance(context: viewContext)
-//        perf.nameExersice = "Name of 1 perf"
-//        perf.weight = 123
-//        perf.percentOfMax = 60
+        let catName: [String] = ["Basic", "Cardio", "Warm-up", "Stretching", "Hang-up"]
+        let catImg: [String] = ["figure.strengthtraining.traditional", "figure.indoor.cycle", "figure.cooldown", "figure.flexibility", "figure.rolling"]
+        let catColor: [Color] = [.blue, .mint, .orange, .red, .brown]
+        
+        for categ in 0...4 {
+            let newCateg = ExerciseCategory(context: viewContext)
+            newCateg.name = catName[categ]
+            newCateg.nameImage = catImg[categ]
+            newCateg.color = UIColor( catColor[categ] )
+        }
         
         do {
             try viewContext.save()

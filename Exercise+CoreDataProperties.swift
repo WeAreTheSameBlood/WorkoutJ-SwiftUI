@@ -2,7 +2,7 @@
 //  Exercise+CoreDataProperties.swift
 //  WorkoutJ
 //
-//  Created by Andrii Hlybchenko on 21.06.2023.
+//  Created by Andrii Hlybchenko on 28.06.2023.
 //
 //
 
@@ -19,8 +19,10 @@ extension Exercise {
     @NSManaged public var desc: String?
     @NSManaged public var name: String?
     @NSManaged public var serial: Int32
+    @NSManaged public var textToExercise: String?
     @NSManaged public var inWorkout: Workout?
     @NSManaged public var sets: NSSet?
+    @NSManaged public var category: ExerciseCategory?
 
 }
 

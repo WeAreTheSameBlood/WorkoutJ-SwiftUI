@@ -117,11 +117,7 @@ struct PersonView: View {
             newPerson.fatPercent = Float(personsData.count)
         }
 
-        print(personsData.first?.description)
         dataHolder.saveContext(viewContext)
-        print("save?")
-        print(Date().formatted(.dateTime))
-        
     }
     
     private func createNewSerial() -> Int16 {
@@ -133,25 +129,16 @@ struct PersonView: View {
             viewContext.delete(personsData.first!)
         }
 
-        print(personsData.first?.description)
         dataHolder.saveContext(viewContext)
-        print("save?")
-        print(Date().formatted(.dateTime))
-        
     }
     
     private func saveChanges(editModKey: String) {
-
-        print(personsData.first?.description)
 
         personsData.first?.weight = personWeight
 
         editModes[editModKey] = false
 
         dataHolder.saveContext(viewContext)
-
-        print(personsData.first?.description)
-        print("\nbtn press: \(Date().description)")
 
     }
 

@@ -37,6 +37,15 @@
                              exersices: [])
      }
  }
+ 
+ extension ExerciseCategory {
+     convenience init(name: String, imageName: String, schematicColor: Color) {
+         self.init(context: PersistenceController.shared.container.viewContext)
+         self.name = name
+         self.nameImage = imageName
+         self.color = UIColor(schematicColor)
+     }
+ }
 
  
 */

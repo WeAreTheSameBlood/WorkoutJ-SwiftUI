@@ -49,35 +49,41 @@ struct CreateUpdateWorkoutView: View {
     
     var body: some View {
         Form {
-            Section(header: Text(newWorkout?.createdDate == nil ? "New wokout" : "Changing workout")) {
-                TextField("Name", text: $name)
-                TextField("Description (optional)", text: $desc)
-            }
-            Section(header: Text("Expected date")) {
-                Toggle("Schedule a date", isOn: $onDateBool)
-                if onDateBool == true {
-                    withAnimation() {
-                        DatePicker("On date",
-                                   selection: $expectedDate,
-                                   displayedComponents: [.date])
+            Group {
+                Section(header: Text(newWorkout?.createdDate == nil ? "New wokout" : "Changing workout")) {
+                    TextField("Name", text: $name)
+                    TextField("Description (optional)", text: $desc)
+                }
+                Section(header: Text("Expected date")) {
+                    Toggle("Schedule a date", isOn: $onDateBool)
+                    if onDateBool == true {
+                        withAnimation() {
+                            DatePicker("On date",
+                                       selection: $expectedDate,
+                                       displayedComponents: [.date])
+                        }
+                    }
+                }
+                if (newWorkout?.isComplete == true) {
+                    Section(header: Text("Completed date")) {
+                        Toggle("Complete status", isOn: $isComplete)
+                        if isComplete {
+                            DatePicker("Completed date",
+                                       selection: $completedDate,
+                                       displayedComponents: [.date])
+                        }
                     }
                 }
             }
-            if (newWorkout?.isComplete == true) {
-                Section(header: Text("Completed date")) {
-                    Toggle("Complete status", isOn: $isComplete)
-                    if isComplete {
-                        DatePicker("Completed date",
-                                   selection: $completedDate,
-                                   displayedComponents: [.date])
-                    }
-                }
+            .onTapGesture {
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
             }
             Section {
                 Button("Save", action: saveNewItem)
                     .font(.headline)
                     .frame(maxWidth: .infinity, alignment: .center)
             }
+            
         }
     }
     
@@ -85,7 +91,7 @@ struct CreateUpdateWorkoutView: View {
         if (newWorkout == nil) {
             newWorkout = Workout(context: viewContext)
             newWorkout?.createdDate = createdDate
-            newWorkout?.serial = workouts.isEmpty ? 0 : createNewSerial()
+            newWorkout?.serial = workouts.isEmpty ? 0 : createNewWorkoutSerial()
             newWorkout?.isComplete = false
         }
         newWorkout?.name = name != "" ? name : "Name is empty"
@@ -102,7 +108,7 @@ struct CreateUpdateWorkoutView: View {
         self.presentationMode.wrappedValue.dismiss()
     }
     
-    private func createNewSerial() -> Int32 {
+    public func createNewWorkoutSerial() -> Int32 {
         return (workouts.max(by: {$0.serial < $1.serial})!.serial + 1)
     }
 }
