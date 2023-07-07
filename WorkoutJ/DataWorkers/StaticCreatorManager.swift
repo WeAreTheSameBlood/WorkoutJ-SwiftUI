@@ -8,32 +8,28 @@
 import SwiftUI
 
 struct CreatorManager {
-    @Environment(\.managedObjectContext) private var viewContext
-    @EnvironmentObject var dataHolder: DataHolder
-
-//    let BASIC_CATEGORIES: [ExerciseCategory] = [
-//            ExerciseCategory(name: "Basic", imageName: "figure.strengthtraining.traditional", schematicColor: .blue),
-//            ExerciseCategory(name: "Cardio", imageName: "figure.indoor.cycle", schematicColor: .yellow),
-//            ExerciseCategory(name: "Warm-up", imageName: "figure.cooldown", schematicColor: .orange),
-//            ExerciseCategory(name: "Stretching", imageName: "figure.flexibility", schematicColor: .mint),
-//            ExerciseCategory(name: "Hang-up", imageName: "figure.rolling", schematicColor: .brown),
-//            ]
-//
-//    public func createBasicCategories() {
-//        for basicCategory in BASIC_CATEGORIES {
-//            let category = ExerciseCategory(context: viewContext)
-//            category.name = basicCategory.name
-//            category.nameImage = basicCategory.nameImage
-//            category.color = basicCategory.color
-//            dataHolder.saveContext(viewContext)
-//        }
-//    }
 }
 
-//let DEFAULT_CATEGORIES: [ExerciseCategory] = [
-//    ExerciseCategory(name: "Basic", imageName: "figure.strengthtraining.traditional", schematicColor: .blue),
-//    ExerciseCategory(name: "Cardio", imageName: "figure.indoor.cycle", schematicColor: .yellow),
-//    ExerciseCategory(name: "Warm-up", imageName: "figure.cooldown", schematicColor: .orange),
-//    ExerciseCategory(name: "Stretching", imageName: "figure.flexibility", schematicColor: .mint),
-//    ExerciseCategory(name: "Hang-up", imageName: "figure.rolling", schematicColor: .brown),
-//    ]
+//enum DefaultCategories {
+//    case basic(name: String ,imageName: String, schematicColor: Color)
+//    case cardio(name: String ,imageName: String, schematicColor: Color)
+//    case warmUp(name: String ,imageName: String, schematicColor: Color)
+//    case stretching(name: String ,imageName: String, schematicColor: Color)
+//    case hangUp(name: String ,imageName: String, schematicColor: Color)
+//    
+//    static func basic() -> DefaultCategories {
+//        return .basic(name: "Basic", imageName: "figure.strengthtraining.traditional", schematicColor: .blue)
+//    }
+//    static func cardio() -> DefaultCategories {
+//        return .cardio(name: "Cardio", imageName: "figure.indoor.cycle", schematicColor: .mint)
+//    }
+//    static func warmUp() -> DefaultCategories {
+//        return .warmUp(name: "Warm-up", imageName: "figure.cooldown", schematicColor: .orange)
+//    }
+//    static func stretching() -> DefaultCategories {
+//        return .stretching(name: "Stretching", imageName: "figure.flexibility", schematicColor: .red)
+//    }
+//    static func hangUp() -> DefaultCategories {
+//        return .hangUp(name: "Hang-up",imageName: "figure.rolling", schematicColor: .brown)
+//    }
+//}

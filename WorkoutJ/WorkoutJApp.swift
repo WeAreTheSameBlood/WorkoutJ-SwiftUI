@@ -45,7 +45,6 @@ struct WorkoutJApp: App {
                     ]
 
             try? context.save()
-
         } catch {
             fatalError("Failed to fetch categories: \(error)")
         }

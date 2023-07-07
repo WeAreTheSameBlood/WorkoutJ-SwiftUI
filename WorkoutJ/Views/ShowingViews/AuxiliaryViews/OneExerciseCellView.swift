@@ -37,7 +37,19 @@ struct OneExerciseCellView: View {
                         Spacer()
                     }
                 }
-                setsOfExerciseInfo(exercise: exercise)
+                if (exercise.category?.name == "Basic") {
+                    setsOfExerciseInfo(exercise: exercise)
+                } else if (exercise.category?.name == "Cardio") {
+                    VStack(spacing: 0) {
+                        Text("Cardio time: \(exercise.cardioTimer) min").padding(7)
+                    }
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(12)
+                } else {
+                    if (exercise.textToExercise != "") { Text("\(exercise.textToExercise ?? "Failer of text")").padding(7) }
+                }
+                
             }
             .listStyle(InsetListStyle())
             .frame(minWidth: 0, maxWidth: .infinity)

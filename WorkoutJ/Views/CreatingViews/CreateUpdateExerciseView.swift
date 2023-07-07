@@ -20,6 +20,8 @@ struct CreateUpdateExerciseView: View {
     @State var name: String
     @State var desc: String
     @State var category: ExerciseCategory?
+    @State var textToExercise: String
+    @State var cardioTimer: Int
     @State var sets: [SetOfExercise]
     @State var inWorkout: Workout
     
@@ -28,13 +30,16 @@ struct CreateUpdateExerciseView: View {
     @State var weightArr : [String] = []
     @State var repsArr : [String] = []
     
+    @State private var selectedTime = Date()
+    
     init(inWorkout: Workout) {
         _name = State(initialValue: "")
         _desc = State(initialValue: "")
+        _textToExercise = State(initialValue: "")
+        _cardioTimer = State(initialValue: 5)
         _sets = State(initialValue: [])
         _inWorkout = State(initialValue: inWorkout)
         _numOfFields = State(initialValue: 1)
-        _category = State(initialValue: nil)
         _weightArr = State(initialValue: [""])
         _repsArr = State(initialValue: [""])
     }
@@ -44,13 +49,13 @@ struct CreateUpdateExerciseView: View {
         _name = State(initialValue: exercise.name!)
         _desc = State(initialValue: exercise.desc!)
         _category = State(initialValue: exercise.category ?? nil)
+        _textToExercise = State(initialValue: exercise.textToExercise ?? "")
+        _cardioTimer = State(initialValue: Int(exercise.cardioTimer))
         _sets = State(initialValue: exercise.sets?.allObjects as! [SetOfExercise])
         _inWorkout = State(initialValue: exercise.inWorkout!)
         _numOfFields = State(initialValue: exercise.sets!.count)
-        
         _weightArr = State(initialValue: Array(sets.sorted(by: {$0.serial < $1.serial}).map{String($0.weight)}))
         _repsArr = State(initialValue: Array(sets.sorted(by: {$0.serial < $1.serial}).map{String($0.reps)}))
-        
     }
     
     var body: some View {
@@ -74,13 +79,44 @@ struct CreateUpdateExerciseView: View {
                     }
                     HStack{
                         Text("Selected:")
-                        (category == nil
-                         ? Text(categories.first!.name!).foregroundColor(Color(categories.first!.color as! UIColor))
-                         : Text(category!.name!).foregroundColor(Color(category?.color as! UIColor))
-                        )
+                        if category != nil { Text(category?.name ?? "Error categ").foregroundColor(Color(category?.color as! UIColor)) }
                         Spacer()
                     }
                 }
+                
+                if category != nil {
+                    if (category?.name == "Basic") {
+                        getBasicSection()
+                    } else if (category?.name == "Cardio") {
+                        getCardioSection()
+                    } else if (category?.name == "Stretching") {
+                        getStretchingSection()
+                    } else {
+                        getWarmUpHangUpSection()
+                    }
+                }
+            }
+            .onTapGesture {
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            }
+            
+            Section {
+                Button("Save", action: saveNewExercise)
+                    .font(.headline)
+                    .frame(maxWidth: .infinity, alignment: .center)
+            }
+        }
+        .onAppear {
+            guard category == nil else { return }
+            if let firstCategory = categories.first {
+                    self.category = firstCategory
+            }
+        }
+    }
+    
+    private func getBasicSection() -> AnyView {
+        return AnyView(
+            Group {
                 Section(header: Text("Parameters on sets")) {
                     ForEach(0 ..< numOfFields) { numOfSet in
                         HStack {
@@ -102,20 +138,48 @@ struct CreateUpdateExerciseView: View {
                     }
                 }
                 .id(numOfFields)
+                
+                Section {
+                    Button("Add Set Field", action: addFieldOfSet)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                }
+            })
+    }
+    
+    private func getCardioSection() -> AnyView {
+        return AnyView(
+            Section(header: Text("Parameters on cardio")) {
+                HStack {
+                    Text("Time of duration")
+                    Spacer()
+                    Picker("", selection: $cardioTimer) {
+                        ForEach(0..<61) { minute in
+                            Text("\(minute) min")
+                        }
+                    }
+                    .frame(width: 120)
+                    .clipped()
+                    .pickerStyle(WheelPickerStyle())
+                    Spacer()
+                }
             }
-            .onTapGesture {
-                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        )
+    }
+    
+    private func getWarmUpHangUpSection() -> AnyView {
+        return AnyView(
+            Section(header: Text("Parameters of Warm-up and Hang-up")) {
+                Text("Warm-up and Hang-up")
             }
-            Section {
-                Button("Add Set Field", action: addFieldOfSet)
-                    .frame(maxWidth: .infinity, alignment: .center)
+        )
+    }
+    
+    private func getStretchingSection() -> AnyView {
+        return AnyView(
+            Section(header: Text("Description for stretching")) {
+                TextField("Text block", text: $textToExercise)
             }
-            Section {
-                Button("Save", action: saveNewExercise)
-                    .font(.headline)
-                    .frame(maxWidth: .infinity, alignment: .center)
-            }
-        }
+        )
     }
     
     private func deleteOneFieldOfSet(numOfSet: Int) {
@@ -142,7 +206,6 @@ struct CreateUpdateExerciseView: View {
     }
 
     private func saveNewExercise() {
-        saveSetsFromFields()
         
         if (newExercise == nil) {
             newExercise = Exercise(context: viewContext)
@@ -151,20 +214,26 @@ struct CreateUpdateExerciseView: View {
         
         newExercise?.name = name != "" ? name : "Name is empty"
         newExercise?.desc = desc
-        
-        if (category == nil) { category = categories.first}
         category?.addToExercise(newExercise!)
         
-        if (!sets.isEmpty) {
-            newExercise?.sets = NSSet(array: [])
-        }
-        
-        for oneSet in 1 ..< fieldsOfSet.count+1 {
-            let newSet = SetOfExercise(context: viewContext)
-            newSet.serial = Int32(oneSet)
-            newSet.weight = (fieldsOfSet[oneSet]!["Weight"]) != "" ? Float(fieldsOfSet[oneSet]!["Weight"]!.replacingOccurrences(of: ",", with: "."))! : 0.0
-            newSet.reps = fieldsOfSet[oneSet]!["Reps"] != "" ? Int16(fieldsOfSet[oneSet]!["Reps"]!)! : 0
-            newExercise?.addToSets(newSet)
+        if (category!.name == "Basic") {
+            
+            saveSetsFromFields()
+            if (!sets.isEmpty) {
+                newExercise?.sets = NSSet(array: [])
+            }
+            
+            for oneSet in 1 ..< fieldsOfSet.count+1 {
+                let newSet = SetOfExercise(context: viewContext)
+                newSet.serial = Int32(oneSet)
+                newSet.weight = (fieldsOfSet[oneSet]!["Weight"]) != "" ? Float(fieldsOfSet[oneSet]!["Weight"]!.replacingOccurrences(of: ",", with: "."))! : 0.0
+                newSet.reps = fieldsOfSet[oneSet]!["Reps"] != "" ? Int16(fieldsOfSet[oneSet]!["Reps"]!)! : 0
+                newExercise?.addToSets(newSet)
+            }
+        } else if (category!.name == "Cardio") {
+            newExercise?.cardioTimer = Int32(cardioTimer)
+        } else {
+            newExercise?.textToExercise = textToExercise
         }
         
         newExercise?.inWorkout = inWorkout

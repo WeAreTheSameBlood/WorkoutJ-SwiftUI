@@ -17,6 +17,25 @@ struct PersistenceController {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
         
+        let personProps = Person(context: viewContext)
+        personProps.serial = Int16(0)
+        personProps.name = "Default name"
+        personProps.weight = 88.6
+        personProps.fatPercent = 12.3
+        
+        let catName: [String] = ["Basic", "Cardio", "Warm-up", "Stretching", "Hang-up"]
+        let catImg: [String] = ["figure.strengthtraining.traditional", "figure.indoor.cycle", "figure.cooldown", "figure.flexibility", "figure.rolling"]
+        let catColor: [Color] = [.blue, .mint, .orange, .red, .brown]
+        
+        var categs: [ExerciseCategory] = []
+        for categ in 0...4 {
+            let newCateg = ExerciseCategory(context: viewContext)
+            newCateg.name = catName[categ]
+            newCateg.nameImage = catImg[categ]
+            newCateg.color = UIColor( catColor[categ] )
+            categs.append(newCateg)
+        }
+        
         for num in 1...4 {
             let newWorkout = Workout(context: viewContext)
             
@@ -39,14 +58,22 @@ struct PersistenceController {
             ex2.name = "Exercise name for \(num) workout"
             ex3.name = "Exercise name for \(num) workout"
             
-            ex1.desc = ""
-            ex2.desc = "bajksvbysdbvjhbadhhyadhjb 330"
-            ex3.desc = ""
+            ex1.desc = "111"
+            ex2.desc = "222ad as 330"
+            ex3.desc = "333"
+            
+            ex1.cardioTimer = 10
+//            ex2.cardioTimer = 20
+            ex3.cardioTimer = 15
             
             ex1.serial = 0
             ex2.serial = 1
             ex3.serial = 2
-
+            
+            ex1.category = categs[0]
+            ex2.category = categs[0]
+            ex3.category = categs[0]
+            
             newWorkout.exercises = [ex1, ex2, ex3]
             
             for ex in (newWorkout.exercises?.allObjects as! [Exercise]) {
@@ -64,22 +91,6 @@ struct PersistenceController {
             }
         }
         
-        let personProps = Person(context: viewContext)
-        personProps.serial = Int16(0)
-        personProps.name = "Default name"
-        personProps.weight = 88.6
-        personProps.fatPercent = 12.3
-        
-        let catName: [String] = ["Basic", "Cardio", "Warm-up", "Stretching", "Hang-up"]
-        let catImg: [String] = ["figure.strengthtraining.traditional", "figure.indoor.cycle", "figure.cooldown", "figure.flexibility", "figure.rolling"]
-        let catColor: [Color] = [.blue, .mint, .orange, .red, .brown]
-        
-        for categ in 0...4 {
-            let newCateg = ExerciseCategory(context: viewContext)
-            newCateg.name = catName[categ]
-            newCateg.nameImage = catImg[categ]
-            newCateg.color = UIColor( catColor[categ] )
-        }
         
         do {
             try viewContext.save()
