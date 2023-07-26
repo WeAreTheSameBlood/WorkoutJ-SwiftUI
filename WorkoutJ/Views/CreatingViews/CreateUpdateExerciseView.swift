@@ -15,6 +15,8 @@ struct CreateUpdateExerciseView: View {
     
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \ExerciseCategory.name, ascending: true)])
     var categories: FetchedResults<ExerciseCategory>
+    
+    @State var navigationTitle: String
 
     @State var newExercise: Exercise?
     @State var name: String
@@ -33,6 +35,7 @@ struct CreateUpdateExerciseView: View {
     @State private var selectedTime = Date()
     
     init(inWorkout: Workout) {
+        _navigationTitle = State(initialValue: "New Exercise")
         _name = State(initialValue: "")
         _desc = State(initialValue: "")
         _textToExercise = State(initialValue: "")
@@ -45,6 +48,7 @@ struct CreateUpdateExerciseView: View {
     }
     
     init(exercise: Exercise) {
+        _navigationTitle = State(initialValue: "Changing Exercise")
         _newExercise = State(initialValue: exercise)
         _name = State(initialValue: exercise.name!)
         _desc = State(initialValue: exercise.desc!)
@@ -61,7 +65,7 @@ struct CreateUpdateExerciseView: View {
     var body: some View {
         Form {
             Group {
-                Section(header: Text(newExercise == nil ? "New exercise" : "Changing exercise")) {
+                Section(header: Text(newExercise == nil ? "New exercise name" : "Changing exercise name")) {
                     TextField("Name", text: $name)
                     TextField("Description (optional)", text: $desc)
                 }
@@ -85,20 +89,21 @@ struct CreateUpdateExerciseView: View {
                 }
                 
                 if category != nil {
-                    if (category?.name == "Basic") {
+                    switch category?.name {
+                    case "Basic":
                         getBasicSection()
-                    } else if (category?.name == "Cardio") {
+                    case "Cardio":
                         getCardioSection()
-                    } else if (category?.name == "Stretching") {
+                    case "Stretching":
                         getStretchingSection()
-                    } else {
+                    default:
                         getWarmUpHangUpSection()
                     }
                 }
             }
-            .onTapGesture {
-                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-            }
+//            .onTapGesture {
+//                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+//            }
             
             Section {
                 Button("Save", action: saveNewExercise)
@@ -106,6 +111,7 @@ struct CreateUpdateExerciseView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
             }
         }
+        .navigationTitle(navigationTitle)
         .onAppear {
             guard category == nil else { return }
             if let firstCategory = categories.first {
@@ -138,7 +144,7 @@ struct CreateUpdateExerciseView: View {
                     }
                 }
                 .id(numOfFields)
-                
+
                 Section {
                     Button("Add Set Field", action: addFieldOfSet)
                         .frame(maxWidth: .infinity, alignment: .center)

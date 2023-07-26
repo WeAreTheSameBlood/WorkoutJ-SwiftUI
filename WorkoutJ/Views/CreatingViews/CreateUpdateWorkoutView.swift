@@ -17,6 +17,8 @@ struct CreateUpdateWorkoutView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Workout.completeDate, ascending: true)])
     private var workouts: FetchedResults<Workout>
     
+    @State var navigationTitle: String
+    
     @State var newWorkout: Workout?
     @State var name: String
     @State var desc: String
@@ -27,6 +29,7 @@ struct CreateUpdateWorkoutView: View {
     @State var completedDate: Date
     
     init() {
+        _navigationTitle = State(initialValue: "New Workout")
         _name = State(initialValue: "")
         _desc = State(initialValue: "")
         _onDateBool = State(initialValue: false)
@@ -37,6 +40,7 @@ struct CreateUpdateWorkoutView: View {
     }
     
     init(workout: Workout) {
+        _navigationTitle = State(initialValue: "Changing Exercise")
         _newWorkout = State(initialValue: workout)
         _name = State(initialValue: workout.name!)
         _desc = State(initialValue: workout.desc!)

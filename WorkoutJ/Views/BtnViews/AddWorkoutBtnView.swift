@@ -13,6 +13,7 @@ struct AddWorkoutBtnView: View {
             NavigationLink(destination: CreateUpdateWorkoutView()) {
                 Image(systemName: "plus")
                     .imageScale(.large)
+                    .padding(15)
             }
             .padding(15)
             .cornerRadius(45)
