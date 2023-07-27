@@ -54,7 +54,7 @@ struct CreateUpdateWorkoutView: View {
     var body: some View {
         Form {
             Group {
-                Section(header: Text(newWorkout?.createdDate == nil ? "New wokout" : "Changing workout")) {
+                Section(header: Text("Main Information")) {
                     TextField("Name", text: $name)
                     TextField("Description (optional)", text: $desc)
                 }
@@ -88,7 +88,7 @@ struct CreateUpdateWorkoutView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
             }
             
-        }
+        }.navigationTitle(navigationTitle)
     }
     
     private func saveNewItem() {

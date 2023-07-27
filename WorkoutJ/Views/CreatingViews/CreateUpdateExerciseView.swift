@@ -65,7 +65,7 @@ struct CreateUpdateExerciseView: View {
     var body: some View {
         Form {
             Group {
-                Section(header: Text(newExercise == nil ? "New exercise name" : "Changing exercise name")) {
+                Section(header: Text("Main Information")) {
                     TextField("Name", text: $name)
                     TextField("Description (optional)", text: $desc)
                 }

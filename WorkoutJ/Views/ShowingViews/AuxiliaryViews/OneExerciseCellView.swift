@@ -11,6 +11,10 @@ struct OneExerciseCellView: View {
     
     @ObservedObject var exercise: Exercise
     
+    @State private var timer: Timer? = nil
+    @State private var timeRemaining: Int = 0
+    @State private var timerCompleted = false
+
     var body: some View {
         HStack {
             
@@ -40,12 +44,24 @@ struct OneExerciseCellView: View {
                 if (exercise.category?.name == "Basic") {
                     setsOfExerciseInfo(exercise: exercise)
                 } else if (exercise.category?.name == "Cardio") {
-                    VStack(spacing: 0) {
-                        Text("Cardio time: \(exercise.cardioTimer) min").padding(7)
+                    ZStack {
+                        Rectangle()
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .foregroundColor( .green.opacity(1) )
+                        GeometryReader { geometry in
+                            Rectangle()
+                                .frame(width: geometry.size.width * CGFloat(Float(timeRemaining) / Float(exercise.cardioTimer * 60)))
+                                .foregroundColor( .orange.opacity(1))
+                        }
+                        VStack(spacing: 0) {
+                            timerCompleted
+                            ? Text("Cardio time: \(exercise.cardioTimer) min (Completed)").padding(7)
+                            : Text("Cardio time: \(timeRemaining / 60) min \(timeRemaining % 60) sec").padding(7)
+                        }
                     }
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .background(Color.gray.opacity(0.2))
                     .cornerRadius(12)
+                    .onTapGesture { startTimer() }
+                    
                 } else {
                     if (exercise.textToExercise != "") { Text("\(exercise.textToExercise ?? "Failer of text")").padding(7) }
                 }
@@ -54,6 +70,21 @@ struct OneExerciseCellView: View {
             .listStyle(InsetListStyle())
             .frame(minWidth: 0, maxWidth: .infinity)
             .cornerRadius(5)
+        }
+        .onAppear { timeRemaining = Int(exercise.cardioTimer * 60) }
+    }
+    
+    private func startTimer() {
+        timer?.invalidate()
+        timerCompleted = false
+//        timeRemaining = Int(exercise.cardioTimer * 60)
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { tempTimer in
+            if timeRemaining > 0 {
+                timeRemaining -= 1
+            } else {
+                timerCompleted = true
+                tempTimer.invalidate()
+            }
         }
     }
     
@@ -71,8 +102,7 @@ struct OneExerciseCellView: View {
                         }
                     }
                 }
-            }
-        )
+            })
     }
 }
 
