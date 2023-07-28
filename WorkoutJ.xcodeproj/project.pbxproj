@@ -29,7 +29,6 @@
 		3707372C2A09002C009B9514 /* ShareModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3707372B2A09002C009B9514 /* ShareModels.swift */; };
 		3707372F2A09147D009B9514 /* SetOfExercise+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3707372D2A09147D009B9514 /* SetOfExercise+CoreDataClass.swift */; };
 		370737302A09147D009B9514 /* SetOfExercise+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3707372E2A09147D009B9514 /* SetOfExercise+CoreDataProperties.swift */; };
-		3754B2902A4B1F3600E177BA /* StaticCreatorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3754B28F2A4B1F3600E177BA /* StaticCreatorManager.swift */; };
 		3754B2922A4B911700E177BA /* OneCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3754B2912A4B911700E177BA /* OneCategoryView.swift */; };
 		3754B2952A4C2DB300E177BA /* ExerciseCategory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3754B2932A4C2DB300E177BA /* ExerciseCategory+CoreDataClass.swift */; };
 		3754B2962A4C2DB300E177BA /* ExerciseCategory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3754B2942A4C2DB300E177BA /* ExerciseCategory+CoreDataProperties.swift */; };
@@ -75,7 +74,6 @@
 		3707372B2A09002C009B9514 /* ShareModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareModels.swift; sourceTree = "<group>"; };
 		3707372D2A09147D009B9514 /* SetOfExercise+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SetOfExercise+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		3707372E2A09147D009B9514 /* SetOfExercise+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SetOfExercise+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		3754B28F2A4B1F3600E177BA /* StaticCreatorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticCreatorManager.swift; sourceTree = "<group>"; };
 		3754B2912A4B911700E177BA /* OneCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneCategoryView.swift; sourceTree = "<group>"; };
 		3754B2932A4C2DB300E177BA /* ExerciseCategory+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExerciseCategory+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		3754B2942A4C2DB300E177BA /* ExerciseCategory+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExerciseCategory+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
@@ -182,7 +180,6 @@
 		370737282A08FDDF009B9514 /* DataWorkers */ = {
 			isa = PBXGroup;
 			children = (
-				3754B28F2A4B1F3600E177BA /* StaticCreatorManager.swift */,
 				370736F729FDC697009B9514 /* Persistence.swift */,
 				3707370B29FDCD79009B9514 /* DataHolder.swift */,
 				370737292A08FE41009B9514 /* ShareService.swift */,
@@ -323,7 +320,6 @@
 			files = (
 				3754B2952A4C2DB300E177BA /* ExerciseCategory+CoreDataClass.swift in Sources */,
 				37DCB8972A1048A0000AF931 /* Formatter.swift in Sources */,
-				3754B2902A4B1F3600E177BA /* StaticCreatorManager.swift in Sources */,
 				370736FB29FDC697009B9514 /* WorkoutJ.xcdatamodeld in Sources */,
 				3754B2922A4B911700E177BA /* OneCategoryView.swift in Sources */,
 				3707371129FDCE0B009B9514 /* Workout+CoreDataClass.swift in Sources */,

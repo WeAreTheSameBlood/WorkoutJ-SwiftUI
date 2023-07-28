@@ -13,19 +13,20 @@ struct OneExerciseCellView: View {
     
     @State private var timer: Timer? = nil
     @State private var timeRemaining: Int = 0
-    @State private var timerCompleted = false
+    @State private var introTextTimer: Bool = true
+    @State private var timerCompleted: Bool = false
+    @State private var timerIsWorking: Bool = false
 
     var body: some View {
         HStack {
             
-            (exercise.category != nil
-             ? Rectangle()
+            ( exercise.category != nil
+            ? Rectangle()
                 .frame(width: 5)
                 .foregroundColor(Color(exercise.category?.color as! UIColor))
-             : Rectangle()
+            : Rectangle()
                 .frame(width: 5)
-                .foregroundColor(.gray)
-            )
+                .foregroundColor(.gray) )
             
             VStack(spacing: 1) {
                 HStack {
@@ -41,27 +42,11 @@ struct OneExerciseCellView: View {
                         Spacer()
                     }
                 }
+                
                 if (exercise.category?.name == "Basic") {
                     setsOfExerciseInfo(exercise: exercise)
                 } else if (exercise.category?.name == "Cardio") {
-                    ZStack {
-                        Rectangle()
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                            .foregroundColor( .green.opacity(1) )
-                        GeometryReader { geometry in
-                            Rectangle()
-                                .frame(width: geometry.size.width * CGFloat(Float(timeRemaining) / Float(exercise.cardioTimer * 60)))
-                                .foregroundColor( .orange.opacity(1))
-                        }
-                        VStack(spacing: 0) {
-                            timerCompleted
-                            ? Text("Cardio time: \(exercise.cardioTimer) min (Completed)").padding(7)
-                            : Text("Cardio time: \(timeRemaining / 60) min \(timeRemaining % 60) sec").padding(7)
-                        }
-                    }
-                    .cornerRadius(12)
-                    .onTapGesture { startTimer() }
-                    
+                   cardioInfo()
                 } else {
                     if (exercise.textToExercise != "") { Text("\(exercise.textToExercise ?? "Failer of text")").padding(7) }
                 }
@@ -70,22 +55,67 @@ struct OneExerciseCellView: View {
             .listStyle(InsetListStyle())
             .frame(minWidth: 0, maxWidth: .infinity)
             .cornerRadius(5)
+            .onAppear { timeRemaining = Int(exercise.cardioTimer * 60) }
         }
-        .onAppear { timeRemaining = Int(exercise.cardioTimer * 60) }
     }
     
     private func startTimer() {
         timer?.invalidate()
+        introTextTimer = false
+        timerIsWorking = true
         timerCompleted = false
-//        timeRemaining = Int(exercise.cardioTimer * 60)
+        
+        timeRemaining -= 1
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { tempTimer in
             if timeRemaining > 0 {
                 timeRemaining -= 1
             } else {
                 timerCompleted = true
                 tempTimer.invalidate()
+                timer = nil
             }
         }
+    }
+    
+    private func pauseTimer() {
+        timer?.invalidate()
+        timerIsWorking = false
+        timer = nil
+    }
+    
+    private func stopTimer() {
+        timer?.invalidate()
+        timer = nil
+        introTextTimer = true
+        timerIsWorking = false
+        timerCompleted = false
+        timeRemaining = Int(exercise.cardioTimer) * 60
+    }
+    
+    private func cardioInfo() -> AnyView {
+        AnyView(
+            ZStack {
+                Rectangle()
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .foregroundColor( .green.opacity(1) )
+                GeometryReader { geometry in
+                    Rectangle()
+                        .frame( width: geometry.size.width * CGFloat(Float(timeRemaining) / Float(exercise.cardioTimer * 60)) )
+                        .foregroundColor( timerIsWorking ? .orange : .white.opacity(1/3))
+                }
+                HStack(spacing: 0) {
+                    introTextTimer
+                    ? ( Text("Planned time: \(exercise.cardioTimer) min").padding(7) )
+                    : ( timerCompleted
+                        ? Text("Cardio time: \(exercise.cardioTimer) min (Completed)").padding(7)
+                        : Text("Cardio time: \(timeRemaining / 60) min \(timeRemaining % 60) sec\(timerIsWorking ? "" : " (Paused)")").padding(7)
+                        )
+                }
+            }
+            .cornerRadius(12)
+            .onTapGesture { timerIsWorking ? pauseTimer() : startTimer() }
+//            .onLongPressGesture { stopTimer() }
+        )
     }
     
     private func setsOfExerciseInfo(exercise: Exercise) -> AnyView {

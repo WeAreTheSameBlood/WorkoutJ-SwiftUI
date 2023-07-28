@@ -21,7 +21,7 @@ struct OneWorkoutPlanView: View {
             List {
                 if (workout.desc != "") {
                     Section(header: Text("Description")) {
-                        Text(workout.desc!)
+                        Text(workout.desc ?? "Error description")
                     }
                 }
                 if ((workout.exercises?.count ?? 0) > 0) {
