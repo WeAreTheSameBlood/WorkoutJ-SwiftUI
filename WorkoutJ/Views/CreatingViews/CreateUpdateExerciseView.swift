@@ -24,6 +24,7 @@ struct CreateUpdateExerciseView: View {
     @State var category: ExerciseCategory?
     @State var textToExercise: String
     @State var cardioTimer: Int
+    @State var planeTime: Bool = true
     @State var sets: [SetOfExercise]
     @State var inWorkout: Workout
     
@@ -155,18 +156,23 @@ struct CreateUpdateExerciseView: View {
     private func getCardioSection() -> AnyView {
         return AnyView(
             Section(header: Text("Parameters on cardio")) {
-                HStack {
-                    Text("Time of duration")
-                    Spacer()
-                    Picker("", selection: $cardioTimer) {
-                        ForEach(0..<61) { minute in
-                            Text("\(minute) min")
+                VStack {
+                    Toggle("Plan of the time", isOn: $planeTime)
+                    if planeTime {
+                        HStack {
+                            Text("Time of duration")
+                            Spacer()
+                            Picker("", selection: $cardioTimer) {
+                                ForEach(0..<61) { minute in
+                                    Text("\(minute) min")
+                                }
+                            }
+                            .frame(width: 120)
+                            .clipped()
+                            .pickerStyle(WheelPickerStyle())
+                            Spacer()
                         }
                     }
-                    .frame(width: 120)
-                    .clipped()
-                    .pickerStyle(WheelPickerStyle())
-                    Spacer()
                 }
             }
         )

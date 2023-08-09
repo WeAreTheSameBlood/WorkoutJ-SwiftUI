@@ -7,15 +7,20 @@
 
 import SwiftUI
 import CoreData
+import UserNotifications
 
 @main
 struct WorkoutJApp: App {
     
     let persistenceController = PersistenceController.shared
     
+    
     var body: some Scene {
         let context = persistenceController.container.viewContext
         let dataHolder = DataHolder(context)
+        let center = UNUserNotificationCenter.current()
+        
+
         
         WindowGroup {
             ContentView()
@@ -23,6 +28,13 @@ struct WorkoutJApp: App {
                 .environmentObject(dataHolder)
                 .onAppear {
                     seedCategoriesIfNeeded(context: context)
+                    center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+                        if granted {
+                            print("Разрешение на уведомления получено")
+                        } else {
+                            print("Разрешение на уведомления не получено")
+                        }
+                    }
                 }
         }
     }

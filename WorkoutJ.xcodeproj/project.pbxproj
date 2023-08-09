@@ -124,6 +124,7 @@
 		370736F429FDC697009B9514 /* WorkoutJ */ = {
 			isa = PBXGroup;
 			children = (
+				37B2640E2A83EDB700EDDF37 /* DemoResources */,
 				37DCB8932A10485C000AF931 /* Util */,
 				370737282A08FDDF009B9514 /* DataWorkers */,
 				3707370A29FDCCD3009B9514 /* Views */,
@@ -208,6 +209,13 @@
 				377C62432A19BA5300383082 /* PersonView.swift */,
 			);
 			path = MainViews;
+			sourceTree = "<group>";
+		};
+		37B2640E2A83EDB700EDDF37 /* DemoResources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DemoResources;
 			sourceTree = "<group>";
 		};
 		37DCB8932A10485C000AF931 /* Util */ = {

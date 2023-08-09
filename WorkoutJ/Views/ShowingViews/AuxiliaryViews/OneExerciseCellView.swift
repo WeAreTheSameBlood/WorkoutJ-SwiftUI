@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 struct OneExerciseCellView: View {
     
@@ -66,6 +67,9 @@ struct OneExerciseCellView: View {
         timerCompleted = false
         
         timeRemaining -= 1
+        
+        makePUSHNotif()
+        
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { tempTimer in
             if timeRemaining > 0 {
                 timeRemaining -= 1
@@ -75,6 +79,19 @@ struct OneExerciseCellView: View {
                 timer = nil
             }
         }
+    }
+    
+    private func makePUSHNotif() {
+        let notificationCenter = UNUserNotificationCenter.current()
+        let content = UNMutableNotificationContent()
+        content.title = "Таймер завершил работу"
+        content.body = "Время кардио-тренировки закончилось!"
+        content.sound = UNNotificationSound.default
+
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(exercise.cardioTimer * 60), repeats: false)
+
+        let request = UNNotificationRequest(identifier: "cardioTimer", content: content, trigger: trigger)
+        notificationCenter.add(request, withCompletionHandler: nil)
     }
     
     private func pauseTimer() {
@@ -100,21 +117,22 @@ struct OneExerciseCellView: View {
                     .foregroundColor( .green.opacity(1) )
                 GeometryReader { geometry in
                     Rectangle()
-                        .frame( width: geometry.size.width * CGFloat(Float(timeRemaining) / Float(exercise.cardioTimer * 60)) )
+                        .frame( width: geometry.size.width * CGFloat(Float(timeRemaining) / Float(exercise.cardioTimer * 60)) > 0 ? geometry.size.width * CGFloat(Float(timeRemaining) / Float(exercise.cardioTimer * 60)) : 0 )
                         .foregroundColor( timerIsWorking ? .orange : .white.opacity(1/3))
                 }
+                
                 HStack(spacing: 0) {
                     introTextTimer
                     ? ( Text("Planned time: \(exercise.cardioTimer) min").padding(7) )
                     : ( timerCompleted
                         ? Text("Cardio time: \(exercise.cardioTimer) min (Completed)").padding(7)
                         : Text("Cardio time: \(timeRemaining / 60) min \(timeRemaining % 60) sec\(timerIsWorking ? "" : " (Paused)")").padding(7)
-                        )
+                    )
                 }
             }
-            .cornerRadius(12)
+            .onTapGesture(count: 2) { stopTimer() }
             .onTapGesture { timerIsWorking ? pauseTimer() : startTimer() }
-//            .onLongPressGesture { stopTimer() }
+            .cornerRadius(12)
         )
     }
     
