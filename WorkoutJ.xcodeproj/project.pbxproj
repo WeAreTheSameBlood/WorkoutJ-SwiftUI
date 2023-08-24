@@ -41,6 +41,8 @@
 		377C62502A1A725500383082 /* PersonPerformance+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377C624A2A1A725500383082 /* PersonPerformance+CoreDataProperties.swift */; };
 		377C62512A1A725500383082 /* Person+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377C624B2A1A725500383082 /* Person+CoreDataClass.swift */; };
 		377C62522A1A725500383082 /* Person+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377C624C2A1A725500383082 /* Person+CoreDataProperties.swift */; };
+		377CD42C2A9719300033BD4C /* DefaultDataCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377CD42B2A9719300033BD4C /* DefaultDataCreator.swift */; };
+		377CD4312A9721030033BD4C /* NotificationManagerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377CD4302A9721030033BD4C /* NotificationManagerService.swift */; };
 		379424AF2A1E14E00068D7C5 /* NumberFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379424AE2A1E14E00068D7C5 /* NumberFields.swift */; };
 		37DCB8952A104882000AF931 /* REF_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCB8942A104882000AF931 /* REF_Extensions.swift */; };
 		37DCB8972A1048A0000AF931 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCB8962A1048A0000AF931 /* Formatter.swift */; };
@@ -86,6 +88,8 @@
 		377C624A2A1A725500383082 /* PersonPerformance+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersonPerformance+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		377C624B2A1A725500383082 /* Person+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		377C624C2A1A725500383082 /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		377CD42B2A9719300033BD4C /* DefaultDataCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDataCreator.swift; sourceTree = "<group>"; };
+		377CD4302A9721030033BD4C /* NotificationManagerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManagerService.swift; sourceTree = "<group>"; };
 		379424AE2A1E14E00068D7C5 /* NumberFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFields.swift; sourceTree = "<group>"; };
 		37DCB8942A104882000AF931 /* REF_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = REF_Extensions.swift; sourceTree = "<group>"; };
 		37DCB8962A1048A0000AF931 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
@@ -124,6 +128,7 @@
 		370736F429FDC697009B9514 /* WorkoutJ */ = {
 			isa = PBXGroup;
 			children = (
+				377CD42F2A9720E70033BD4C /* Servises */,
 				37B2640E2A83EDB700EDDF37 /* DemoResources */,
 				37DCB8932A10485C000AF931 /* Util */,
 				370737282A08FDDF009B9514 /* DataWorkers */,
@@ -184,6 +189,7 @@
 				370736F729FDC697009B9514 /* Persistence.swift */,
 				3707370B29FDCD79009B9514 /* DataHolder.swift */,
 				370737292A08FE41009B9514 /* ShareService.swift */,
+				377CD42B2A9719300033BD4C /* DefaultDataCreator.swift */,
 			);
 			path = DataWorkers;
 			sourceTree = "<group>";
@@ -209,6 +215,14 @@
 				377C62432A19BA5300383082 /* PersonView.swift */,
 			);
 			path = MainViews;
+			sourceTree = "<group>";
+		};
+		377CD42F2A9720E70033BD4C /* Servises */ = {
+			isa = PBXGroup;
+			children = (
+				377CD4302A9721030033BD4C /* NotificationManagerService.swift */,
+			);
+			path = Servises;
 			sourceTree = "<group>";
 		};
 		37B2640E2A83EDB700EDDF37 /* DemoResources */ = {
@@ -332,6 +346,7 @@
 				3754B2922A4B911700E177BA /* OneCategoryView.swift in Sources */,
 				3707371129FDCE0B009B9514 /* Workout+CoreDataClass.swift in Sources */,
 				3707371629FDD56F009B9514 /* CreateUpdateWorkoutView.swift in Sources */,
+				377CD4312A9721030033BD4C /* NotificationManagerService.swift in Sources */,
 				3707372F2A09147D009B9514 /* SetOfExercise+CoreDataClass.swift in Sources */,
 				3707370C29FDCD79009B9514 /* DataHolder.swift in Sources */,
 				3707371329FDCE0B009B9514 /* Exercise+CoreDataClass.swift in Sources */,
@@ -358,6 +373,7 @@
 				377C62502A1A725500383082 /* PersonPerformance+CoreDataProperties.swift in Sources */,
 				3754B2962A4C2DB300E177BA /* ExerciseCategory+CoreDataProperties.swift in Sources */,
 				3707372A2A08FE41009B9514 /* ShareService.swift in Sources */,
+				377CD42C2A9719300033BD4C /* DefaultDataCreator.swift in Sources */,
 				37EC4EE92A14359C00682550 /* OneExerciseCellView.swift in Sources */,
 				3707371429FDCE0B009B9514 /* Exercise+CoreDataProperties.swift in Sources */,
 				370737272A086732009B9514 /* CheckBoxView.swift in Sources */,

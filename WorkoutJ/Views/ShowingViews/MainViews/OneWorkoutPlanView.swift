@@ -19,7 +19,7 @@ struct OneWorkoutPlanView: View {
     var body: some View {
         ZStack {
             List {
-                if (workout.desc != "") {
+                if (workout.desc ?? "" != "") {
                     Section(header: Text("Description")) {
                         Text(workout.desc ?? "Error description")
                     }
