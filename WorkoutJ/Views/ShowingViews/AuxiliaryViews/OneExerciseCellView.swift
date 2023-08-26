@@ -66,9 +66,9 @@ struct OneExerciseCellView: View {
         timerIsWorking = true
         timerCompleted = false
         
-        timeRemaining -= 1
-        
         makePUSHNotif()
+        
+        timeRemaining -= 1
         
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { tempTimer in
             if timeRemaining > 0 {
@@ -82,16 +82,7 @@ struct OneExerciseCellView: View {
     }
     
     private func makePUSHNotif() {
-        let notificationCenter = UNUserNotificationCenter.current()
-        let content = UNMutableNotificationContent()
-        content.title = "Таймер завершил работу"
-        content.body = "Время кардио-тренировки закончилось!"
-        content.sound = UNNotificationSound.default
-
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(exercise.cardioTimer * 60), repeats: false)
-
-        let request = UNNotificationRequest(identifier: "cardioTimer", content: content, trigger: trigger)
-        notificationCenter.add(request, withCompletionHandler: nil)
+//        NotificationManagerService.shared.startTimerNotification(totalTime: timeRemaining)
     }
     
     private func pauseTimer() {

@@ -9,16 +9,17 @@ import SwiftUI
 import NotificationCenter
 
 class NotificationManagerService {
-    public static let shared = NotificationManagerService()
-    private let center = UNUserNotificationCenter.current()
     
     private init() {}
+    public static let shared = NotificationManagerService()
+    
+    private let notificationCenter = UNUserNotificationCenter.current()
     
     public func requestAuthorization() {
-        center.getNotificationSettings { settings in
+        notificationCenter.getNotificationSettings { settings in
             switch settings.authorizationStatus {
             case .notDetermined:
-                self.center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+                self.notificationCenter.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
                     if granted {
                         print("Notification permission granted")
                     } else {

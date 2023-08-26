@@ -30,6 +30,7 @@ struct PersistenceController {
         var categs: [ExerciseCategory] = []
         for categ in 0...4 {
             let newCateg = ExerciseCategory(context: viewContext)
+            newCateg.serial = Int16(categ+1)
             newCateg.name = catName[categ]
             newCateg.nameImage = catImg[categ]
             newCateg.color = UIColor( catColor[categ] )

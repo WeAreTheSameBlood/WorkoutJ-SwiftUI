@@ -76,7 +76,7 @@ struct OneWorkoutPlanView: View {
                 .environmentObject(workout)
                 .position(x: UIScreen.main.bounds.width*0.5, y: UIScreen.main.bounds.height*0.75)
             }
-        .navigationTitle(workout.name!)
+        .navigationTitle(workout.name ?? "")
     }
     
     func shareWorkout() {

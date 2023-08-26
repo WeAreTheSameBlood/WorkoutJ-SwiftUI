@@ -12,7 +12,9 @@ public class DefaultDataCreator {
     
     private init() {}
     
-    public static func CreateDefaultCategories(context: NSManagedObjectContext) {
+    public static let shared = DefaultDataCreator()
+    
+    public func createDefaultCategories(context: NSManagedObjectContext) {
         
         let fetchRequest: NSFetchRequest<ExerciseCategory> = ExerciseCategory.fetchRequest()
         
@@ -23,12 +25,12 @@ public class DefaultDataCreator {
             }
             
             let _: [ExerciseCategory] = [
-                    ExerciseCategory(name: "Basic", imageName: "figure.strengthtraining.traditional", schematicColor: .blue),
-                    ExerciseCategory(name: "Cardio", imageName: "figure.indoor.cycle", schematicColor: .mint),
-                    ExerciseCategory(name: "Warm-up", imageName: "figure.cooldown", schematicColor: .orange),
-                    ExerciseCategory(name: "Stretching", imageName: "figure.flexibility", schematicColor: .red),
-                    ExerciseCategory(name: "Hang-up", imageName: "figure.rolling", schematicColor: .brown),
-                    ]
+                ExerciseCategory(serial: 1, name: "Basic", imageName: "figure.strengthtraining.traditional", schematicColor: .blue),
+                ExerciseCategory(serial: 2, name: "Cardio", imageName: "figure.indoor.cycle", schematicColor: .mint),
+                ExerciseCategory(serial: 3, name: "Warm-up", imageName: "figure.cooldown", schematicColor: .orange),
+                ExerciseCategory(serial: 4, name: "Stretching", imageName: "figure.flexibility", schematicColor: .red),
+                ExerciseCategory(serial: 5, name: "Hang-up", imageName: "figure.rolling", schematicColor: .brown),
+            ]
             
             try? context.save()
             

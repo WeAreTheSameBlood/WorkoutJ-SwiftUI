@@ -14,6 +14,7 @@
         <attribute name="color" optional="YES" attributeType="Transformable"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="nameImage" optional="YES" attributeType="String"/>
+        <attribute name="serial" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="exercise" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Exercise" inverseName="category" inverseEntity="Exercise"/>
     </entity>
     <entity name="Person" representedClassName="Person" syncable="YES">

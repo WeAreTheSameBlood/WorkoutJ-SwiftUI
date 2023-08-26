@@ -2,12 +2,13 @@
 //  ExerciseCategory+CoreDataProperties.swift
 //  WorkoutJ
 //
-//  Created by Andrii Hlybchenko on 28.06.2023.
+//  Created by Andrii Hlybchenko on 24.08.2023.
 //
 //
 
 import Foundation
 import CoreData
+import UIKit
 import SwiftUI
 
 
@@ -17,9 +18,10 @@ extension ExerciseCategory {
         return NSFetchRequest<ExerciseCategory>(entityName: "ExerciseCategory")
     }
 
+    @NSManaged public var color: NSObject?
     @NSManaged public var name: String?
     @NSManaged public var nameImage: String?
-    @NSManaged public var color: NSObject?
+    @NSManaged public var serial: Int16
     @NSManaged public var exercise: NSSet?
 
 }
@@ -46,8 +48,9 @@ extension ExerciseCategory : Identifiable {
 }
 
 extension ExerciseCategory {
-    convenience init(name: String, imageName: String, schematicColor: Color) {
+    convenience init(serial: Int16, name: String, imageName: String, schematicColor: Color) {
         self.init(context: PersistenceController.shared.container.viewContext)
+        self.serial = serial
         self.name = name
         self.nameImage = imageName
         self.color = UIColor(schematicColor)

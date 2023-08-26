@@ -13,7 +13,7 @@ struct CreateUpdateExerciseView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var dataHolder: DataHolder
     
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \ExerciseCategory.name, ascending: true)])
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \ExerciseCategory.serial, ascending: true)])
     var categories: FetchedResults<ExerciseCategory>
     
     @State var navigationTitle: String
@@ -102,9 +102,6 @@ struct CreateUpdateExerciseView: View {
                     }
                 }
             }
-//            .onTapGesture {
-//                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-//            }
             
             Section {
                 Button("Save", action: saveNewExercise)

@@ -129,7 +129,8 @@ struct ContentView: View {
                     .position(x: UIScreen.main.bounds.width*0.5, y: UIScreen.main.bounds.height*0.75)
             }
         .navigationTitle(Text("Workouts"))
-        }.id(viewContext)
+        .id(viewContext)
+        }
     }
     
     private func share(for workout: Workout) {
