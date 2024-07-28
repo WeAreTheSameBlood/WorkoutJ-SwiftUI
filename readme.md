@@ -10,9 +10,6 @@ The project uses:
 - CoreData
 - Notification API
 
-The application does not have a rigid design pattern, but adheres to a structure similar to backend applications, with the separation of entities by functional affiliation (Services (DataWorkers) / Models / Views / Util, e.t.).\
-In the future, to work with third-party APIs, the Adapter pattern will be implemented to bring different data types to a single form.
-
 ### You can check out the demo screenshots below:
 <div align="center">
   <img src="https://github.com/WeAreTheSameBlood/WorkoutJ-SwiftUI/assets/91153388/9f4c012f-39de-4d70-bb5b-b87d91e2f053" width="400px"</img> 
